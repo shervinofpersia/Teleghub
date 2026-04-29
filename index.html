@@ -3,260 +3,325 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آرشیو کانال‌های تلگرام با تصاویر محلی</title>
+    <title>آرشیو کانال‌های تلگرام با تصاویر و فایل‌ها</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #121212;
+            background: #0a0c10;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 20px;
             color: #e0e0e0;
             direction: rtl;
         }
-        .container { max-width: 900px; margin: 0 auto; }
-        h1 { color: #2AABEE; border-right: 4px solid #2AABEE; padding-right: 15px; margin-bottom: 30px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        h1 {
+            color: #2AABEE;
+            border-right: 4px solid #2AABEE;
+            padding-right: 15px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
         .post {
-            background: #1e1e1e;
-            border-radius: 12px;
+            background: #1a1d24;
+            border-radius: 20px;
             margin-bottom: 30px;
             padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            transition: 0.2s;
+            border: 1px solid #2a2e38;
         }
-        .channel { color: #2AABEE; font-weight: bold; font-size: 1.2rem; }
-        .datetime { color: #888; font-size: 0.8rem; margin-right: 15px; }
+        .post:hover { border-color: #2AABEE; }
+        .post-header {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .channel {
+            background: #2AABEE20;
+            color: #2AABEE;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .datetime {
+            color: #888;
+            font-size: 0.75rem;
+        }
         .text {
+            background: #0f1117;
+            padding: 15px;
+            border-radius: 16px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            word-break: break-word;
             margin: 15px 0;
-            line-height: 1.6;
-            background: #0a0a0a;
-            padding: 12px;
-            border-radius: 8px;
-            border-right: 2px solid #2AABEE;
+            font-size: 0.9rem;
+            border-right: 3px solid #2AABEE;
         }
-        .images { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
-        .images img { max-width: 100%; max-height: 300px; border-radius: 8px; border: 1px solid #333; }
-        .files { margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px; }
-        .files a {
-            background: #2AABEE20; border: 1px solid #2AABEE; color: #2AABEE;
-            padding: 8px 15px; border-radius: 20px; text-decoration: none; font-size: 0.85rem;
+        .images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 15px 0;
         }
-        .files a:hover { background: #2AABEE; color: #121212; }
-        footer { text-align: center; margin-top: 40px; color: #555; font-size: 0.8rem; }
+        .images img {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .images img:hover { transform: scale(1.02); }
+        .files {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .file-link {
+            background: #2AABEE10;
+            border: 1px solid #2AABEE;
+            color: #2AABEE;
+            padding: 6px 14px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .file-link:hover {
+            background: #2AABEE;
+            color: #000;
+        }
+        .slipnet-url {
+            background: #0a0c10;
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .copy-btn {
+            background: #2AABEE20;
+            border: none;
+            color: #2AABEE;
+            padding: 4px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: 0.2s;
+        }
+        .copy-btn:hover {
+            background: #2AABEE;
+            color: #000;
+        }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2AABEE;
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            opacity: 0;
+            transition: 0.2s;
+            pointer-events: none;
+            z-index: 999;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #555;
+            font-size: 0.7rem;
+        }
+        hr { border-color: #2a2e38; margin: 20px 0; }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>📸 آخرین پست‌های کانال‌های تلگرام (با تصاویر محلی)</h1>
+    <h1>📡 آخرین پست‌های کانال‌های تلگرام</h1>
 
     <div class="post">
-        <div>
-            <span class="channel">@xgvpn</span>
-            <span class="datetime">2026-04-28 07:27:13</span>
+        <div class="post-header">
+            <span class="channel">@aishervin</span>
+            <span class="datetime">2026-02-27 23:41:57</span>
         </div>
-        <div class="text">🟢آموزش وصل شدن با Masterdns MDVبسیار آسونه و راحت اگر با حوصله انجام بدیناول فایلی که لینک داخلیش رو دادیم رو نصب و باز میکنیدپایین برنامه قسمت پروفایل رو میزنید بالا علامت + رو میزنید یه صفحه باز میشه به اینصورت که نوشتم پر کنید👇Profile Name :XGvpnDomain :c.kalbodteam.onlineEncryption key :ea4f8543c0e398c53a882c011a162b48Resolvers :10.185.68.11410.185.68.113194.225.62.8078.38.24.12231.214.251.5831.214.251.4780.210.44.18493.118.137.221185.24.255.80195.211.47.19994.232.173.145185.51.200.162.60.136.158212.33.203.105.160.139.7410.3.96.10176.65.240.86109.230.72.24310.10.10.1010.255.255.2542.189.44.44194.225.62.8093.118.137.22180.210.44.18431.214.251.5894.232.173.14531.214.251.4778.38.24.122195.211.47.19962.60.136.158185.24.255.8037.191.79.105212.16.76.19212.33.203.102.144.20.15031.214.174.1635.160.139.7478.38.50.218178.252.147.8494.182.154.10510.3.96.1062.60.206.68178.252.189.82109.230.79.125.106.18.21881.91.145.22.182.253.245192.168.88.118194.225.62.8093.126.2.252185.24.255.8037.191.79.10531.214.251.58212.16.76.19212.33.203.1031.214.174.16378.38.24.12245.92.94.208192.168.88.11894.232.173.145109.238.188.1482.182.253.24593.118.101.1535.160.139.74همشو بزنید روش کپی میشنبه بقیه گزینه ها کاری نداریم آخر save رو بزنید و پروفایل ذخیره میشه بزنید روش تیک سبز بیاد بعد برید صفحه اول بزنید وصل بشهخودش اسکن میکنه براتون و سبز که شد وصل میشهو اینکه بعد از سبز شدن داخل تلگرام باید یکم صبر کنید تا کامل کانکت بشه سرعت خوب و پایداری بالایی داره .توجه : چون رندم به دی ان اس ها کانکت میشه امکان داره بعضی دی ان اس ها براتون بعد از وصل شدن و صبر کردن خوب کار نده در اینصورت یبار دیگه وصل شید تا یه دی ان اس خوب براتون انتخاب بشهمیتونید برای اینکه سرعت رو بالاتر ببرید از سربرگ ستینگ بالا split tunneling برید برنامه موردنظرتون رو انتخاب کنید مثلا تلگرام بعد گزینه selected رو بزنید و پایین Apply رو بزنید اینطوری فقط به تلگرام نت میده و سرعت خیلی فرق میکنه⭕️در آخر لذت ببرید برای ما هم برای ادامه کار و فعالیت چنل حتما ری اکشن و استار یادتون نره🙂❤️:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::@XGVPN👈جوین شو</div>
     </div>
 
     <div class="post">
-        <div>
-            <span class="channel">@xgvpn</span>
-            <span class="datetime">2026-04-28 07:29:05</span>
+        <div class="post-header">
+            <span class="channel">@aishervin</span>
+            <span class="datetime">2026-02-28 23:09:51</span>
         </div>
-        <div class="text">عشقای من قربونتون برم اینا تو چنل بود هم برنامه مستر دی ان اس هم آموزش👆یبار دیگه فرستادم چون خیلی تو دایرکت میپرسیدین اگر هم بتونم یه فیلم آموزشی هم میگیرم رو چشام❤️😘حله نفسا؟😇</div>
+        <div class="text">شب دارکی شد....😁☬SHΞN™</div>
     </div>
 
     <div class="post">
-        <div>
-            <span class="channel">@xgvpn</span>
-            <span class="datetime">2026-04-28 07:45:06</span>
+        <div class="post-header">
+            <span class="channel">@aishervin</span>
+            <span class="datetime">2026-03-01 02:51:03</span>
         </div>
-        <div class="text">اینم فایل Masterdns MDVلینک داخلی:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::@XGVPN👈جوین شو</div>
+        <div class="text">ılllıılııllllılııııııllllıııllllıılı 1:13🎧 SHΞN™ ᴍᴇᴅɪᴀ ʟᴀʙ</div>
     </div>
 
     <div class="post">
-        <div>
-            <span class="channel">@xgvpn</span>
-            <span class="datetime">2026-04-28 07:46:02</span>
+        <div class="post-header">
+            <span class="channel">@aishervin</span>
+            <span class="datetime">2026-03-01 03:05:44</span>
         </div>
-        <div class="text">masterdnsvpn-HN-1.2.2-universal-release.apk</div>
+        <div class="text">صحبت ساعت دو سه ی دیروز صبحه ها... هنو نه خانی اومده بود نه خا.... رفته بود 😁</div>
     </div>
 
     <div class="post">
-        <div>
-            <span class="channel">@xgvpn</span>
-            <span class="datetime">2026-04-28 07:47:25</span>
+        <div class="post-header">
+            <span class="channel">@aishervin</span>
+            <span class="datetime">2026-03-06 12:25:10</span>
         </div>
-        <div class="text">🟢آموزش وصل شدن با Masterdns MDV   بسیار آسونه و راحت اگر با حوصله انجام بدین   اول فایلی که لینک داخلیش رو دادیم رو نصب و باز میکنید  پایین برنامه قسمت پروفایل رو میزنید بالا علامت + رو میزنید یه صفحه باز میشه به اینصورت که نوشتم پر کنید👇Profile Name :…</div>
+        <div class="text">من خا.... این زندگی رو.... 🚶</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@appxa</span>
             <span class="datetime">2026-04-29 00:51:27</span>
         </div>
-        <div class="text">slipnet://Mjh8dmF5ZG5zX3NzaHxNb3NpcGxheTF8dnMubXNkbC5ldS5jY3wyLjE4OS40NC40NDo1MzowLDIuMTgyLjI1My4yNDU6NTM6MCw1LjIwMi43OC4yOjUzOjB8MHw1MDAwfGJicnwxMDgwfDEyNy4wLjAuMXwwfDdmMjRhYjM4MzZmNzQ1OTZkMmRkZWQ3YzJiZDIwMmRmZWExYmMyYTcwMzc1ODRhMDUxNjEyOWQ1NzI5YThjNGN8bW9zaXBsYXl8TUpYVDlJZGdzdXVKRDRlT3wxfG1vc2lwbGF5fE1KWFQ5SWRnc3V1SkQ0ZU98MjJ8MHwxMjcuMC4wLjF8MHx8dWRwfHBhc3N3b3JkfHx8fDB8NDQzfHx8MHx8MHwwfHwwfHwwfDB8MTA4MHwwfG5zfDEwMXwwLjB8MHwwfDB8MHwyfDB8fHw4MDgwfHwwfC98MXx8fGZhbm91dHwzfHx0bHN8d3N8L3x8NDQzfDF8c25pX3NwbGl0fDMwMHx8MHwwfDB8OHx8MHw=همراه اول</div>
+        <div class="text"><div class="slipnet-url"><span style="word-break:break-all;">slipnet://Mjh8dmF5ZG5zX3NzaHxNb3NpcGxheTF8dnMubXNkbC5ldS5jY3wyLjE4OS40NC40NDo1MzowLDIuMTgyLjI1My4yNDU6NTM6MCw1LjIwMi43OC4yOjUzOjB8MHw1MDAwfGJicnwxMDgwfDEyNy4wLjAuMXwwfDdmMjRhYjM4MzZmNzQ1OTZkMmRkZWQ3YzJiZDIwMmRmZWExYmMyYTcwMzc1ODRhMDUxNjEyOWQ1NzI5YThjNGN8bW9zaXBsYXl8TUpYVDlJZGdzdXVKRDRlT3wxfG1vc2lwbGF5fE1KWFQ5SWRnc3V1SkQ0ZU98MjJ8MHwxMjcuMC4wLjF8MHx8dWRwfHBhc3N3b3JkfHx8fDB8NDQzfHx8MHx8MHwwfHwwfHwwfDB8MTA4MHwwfG5zfDEwMXwwLjB8MHwwfDB8MHwyfDB8fHw4MDgwfHwwfC98MXx8fGZhbm91dHwzfHx0bHN8d3N8L3x8NDQzfDF8c25pX3NwbGl0fDMwMHx8MHwwfDB8OHx8MHw=همراه</span><button class="copy-btn" onclick="copyToClipboard('slipnet://Mjh8dmF5ZG5zX3NzaHxNb3NpcGxheTF8dnMubXNkbC5ldS5jY3wyLjE4OS40NC40NDo1MzowLDIuMTgyLjI1My4yNDU6NTM6MCw1LjIwMi43OC4yOjUzOjB8MHw1MDAwfGJicnwxMDgwfDEyNy4wLjAuMXwwfDdmMjRhYjM4MzZmNzQ1OTZkMmRkZWQ3YzJiZDIwMmRmZWExYmMyYTcwMzc1ODRhMDUxNjEyOWQ1NzI5YThjNGN8bW9zaXBsYXl8TUpYVDlJZGdzdXVKRDRlT3wxfG1vc2lwbGF5fE1KWFQ5SWRnc3V1SkQ0ZU98MjJ8MHwxMjcuMC4wLjF8MHx8dWRwfHBhc3N3b3JkfHx8fDB8NDQzfHx8MHx8MHwwfHwwfHwwfDB8MTA4MHwwfG5zfDEwMXwwLjB8MHwwfDB8MHwyfDB8fHw4MDgwfHwwfC98MXx8fGZhbm91dHwzfHx0bHN8d3N8L3x8NDQzfDF8c25pX3NwbGl0fDMwMHx8MHwwfDB8OHx8MHw=همراه')">📋 کپی</button></div> اول</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@appxa</span>
             <span class="datetime">2026-04-29 00:58:44</span>
         </div>
-        <div class="text">slipnet-enc://AUADzh1rWyUwO01/ObaPZipnU6G+8sYR5/bK5zP0uhNQRXzYbyb//BnMA3R5uaWyEvAlMGJUaLnGHpUl67ZuHvQozQMnjhWpFI1xPILZhVsAAujbrxluyQ+NEKs4meaAYyUAJd2P2i0U1WRvqoRi7jSX5fRafD5JTAiNnLwCGK6TjblDoPtdVOZWjZYvR/JOmyEco9gV48TEzyyk+I9QcSfM2sKpxOAC4x/KAvUmvQxAM1AzZQIbFjxVUBwHx69Zw8seEXQ8NYYnd9uGtvnp1QE033yVMEkc/hWq+PmSpTDA6K0g9n7goCJ6sBjT8NIkCTwDnokyXasuLl89HNblU8ukxfQzwkZbAj5uihB1BbZUe0UyzVC/m6ji3iwDJ0tikR+QvLX6GUrj0OFbIdeCD/fdhmX8D+qDKJXjvpfVS5Hza/47u/qdiQCftlb+Fc5Zf4axcalCZcgPujjREtc75y3XAS26oojzzrNGA6Gda6jUxuyMLlsWuzUe4MfRhiRUaEfrP0juhtNpNSTl13MN52sy89JIDQSl20Rtq5TIvoV0j8t1YQggJNqkozM0t+DqvQyR12ufosxDQBc0wN8xXX3OIHXq67GYMe6TLsGyoPeLYWR2LI7NoAwPnZJQH0PIeHkIuwQDHmISc72gWRzvboIeiscXR/HdBGCyjuSmhW1aM+/8gNlhTseWdxzPRDupIKE/ZSmDCfr40kLSTXhd1g80همراه اول</div>
+        <div class="text"><div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AUADzh1rWyUwO01/ObaPZipnU6G+8sYR5/bK5zP0uhNQRXzYbyb//BnMA3R5uaWyEvAlMGJUaLnGHpUl67ZuHvQozQMnjhWpFI1xPILZhVsAAujbrxluyQ+NEKs4meaAYyUAJd2P2i0U1WRvqoRi7jSX5fRafD5JTAiNnLwCGK6TjblDoPtdVOZWjZYvR/JOmyEco9gV48TEzyyk+I9QcSfM2sKpxOAC4x/KAvUmvQxAM1AzZQIbFjxVUBwHx69Zw8seEXQ8NYYnd9uGtvnp1QE033yVMEkc/hWq+PmSpTDA6K0g9n7goCJ6sBjT8NIkCTwDnokyXasuLl89HNblU8ukxfQzwkZbAj5uihB1BbZUe0UyzVC/m6ji3iwDJ0tikR+QvLX6GUrj0OFbIdeCD/fdhmX8D+qDKJXjvpfVS5Hza/47u/qdiQCftlb+Fc5Zf4axcalCZcgPujjREtc75y3XAS26oojzzrNGA6Gda6jUxuyMLlsWuzUe4MfRhiRUaEfrP0juhtNpNSTl13MN52sy89JIDQSl20Rtq5TIvoV0j8t1YQggJNqkozM0t+DqvQyR12ufosxDQBc0wN8xXX3OIHXq67GYMe6TLsGyoPeLYWR2LI7NoAwPnZJQH0PIeHkIuwQDHmISc72gWRzvboIeiscXR/HdBGCyjuSmhW1aM+/8gNlhTseWdxzPRDupIKE/ZSmDCfr40kLSTXhd1g80همراه</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AUADzh1rWyUwO01/ObaPZipnU6G+8sYR5/bK5zP0uhNQRXzYbyb//BnMA3R5uaWyEvAlMGJUaLnGHpUl67ZuHvQozQMnjhWpFI1xPILZhVsAAujbrxluyQ+NEKs4meaAYyUAJd2P2i0U1WRvqoRi7jSX5fRafD5JTAiNnLwCGK6TjblDoPtdVOZWjZYvR/JOmyEco9gV48TEzyyk+I9QcSfM2sKpxOAC4x/KAvUmvQxAM1AzZQIbFjxVUBwHx69Zw8seEXQ8NYYnd9uGtvnp1QE033yVMEkc/hWq+PmSpTDA6K0g9n7goCJ6sBjT8NIkCTwDnokyXasuLl89HNblU8ukxfQzwkZbAj5uihB1BbZUe0UyzVC/m6ji3iwDJ0tikR+QvLX6GUrj0OFbIdeCD/fdhmX8D+qDKJXjvpfVS5Hza/47u/qdiQCftlb+Fc5Zf4axcalCZcgPujjREtc75y3XAS26oojzzrNGA6Gda6jUxuyMLlsWuzUe4MfRhiRUaEfrP0juhtNpNSTl13MN52sy89JIDQSl20Rtq5TIvoV0j8t1YQggJNqkozM0t+DqvQyR12ufosxDQBc0wN8xXX3OIHXq67GYMe6TLsGyoPeLYWR2LI7NoAwPnZJQH0PIeHkIuwQDHmISc72gWRzvboIeiscXR/HdBGCyjuSmhW1aM+/8gNlhTseWdxzPRDupIKE/ZSmDCfr40kLSTXhd1g80همراه')">📋 کپی</button></div> اول</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@appxa</span>
             <span class="datetime">2026-04-29 01:01:30</span>
         </div>
-        <div class="text">slipnet-enc://AZeG+6MV0VYkBtlhCH3Vz8LxZ2g6B7TSNljgllFDJ0vkBwutNpNIsBhJHuReDBmjEJUskLTn5YgWbPsNQJwt4awSbmCrB+plpSdgqbsptR/BrwA3LFBXJ4+3CIgLToqSgCiGRbmPipl9+k59Oib3zo2SCOUC+n0g08uXRGSuGeUK+jZ/424LZhvBBwmuQMOdy/H/AYE2bvpDBCobzSkoz7weomIH8yZpsRD4WaVIuOIcSYXtEeIqfBzxKrmmTDgoSAMNdVwn3Ir9Ly/b0aHUA8wxoKww8oR/ohkC4Ia+NtAPXhlRs0NDgxYsBHEMotse7GppIclntXxFIBl4nKj9QsdgklqAYUy2wwfrXmc/q8lujR5ewCEtRwy6+72OQl5BDHnCQ9zPTnIR931aoFelYj7wPl/+SWPzD438WmOa+2x5Z+Z6ltdvMT2x633yNVIcLlhPx9zNQpofuaHMFBjlccVVBSLdZE8LpVFxJ1T7frF83M3yryhkAuQzqcyZG3MfqSuqT2FwLmFe+YXsIKdi6AS4Ov/8u24zMuE05V/zZjah7Lud2ALRtehxBRLcRjxcPUg6+Y/50GbouYTNWi/5MQgymV/CxiAw7cX9p8seSpKljRU=همراه اول</div>
+        <div class="text"><div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AZeG+6MV0VYkBtlhCH3Vz8LxZ2g6B7TSNljgllFDJ0vkBwutNpNIsBhJHuReDBmjEJUskLTn5YgWbPsNQJwt4awSbmCrB+plpSdgqbsptR/BrwA3LFBXJ4+3CIgLToqSgCiGRbmPipl9+k59Oib3zo2SCOUC+n0g08uXRGSuGeUK+jZ/424LZhvBBwmuQMOdy/H/AYE2bvpDBCobzSkoz7weomIH8yZpsRD4WaVIuOIcSYXtEeIqfBzxKrmmTDgoSAMNdVwn3Ir9Ly/b0aHUA8wxoKww8oR/ohkC4Ia+NtAPXhlRs0NDgxYsBHEMotse7GppIclntXxFIBl4nKj9QsdgklqAYUy2wwfrXmc/q8lujR5ewCEtRwy6+72OQl5BDHnCQ9zPTnIR931aoFelYj7wPl/+SWPzD438WmOa+2x5Z+Z6ltdvMT2x633yNVIcLlhPx9zNQpofuaHMFBjlccVVBSLdZE8LpVFxJ1T7frF83M3yryhkAuQzqcyZG3MfqSuqT2FwLmFe+YXsIKdi6AS4Ov/8u24zMuE05V/zZjah7Lud2ALRtehxBRLcRjxcPUg6+Y/50GbouYTNWi/5MQgymV/CxiAw7cX9p8seSpKljRU=همراه</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AZeG+6MV0VYkBtlhCH3Vz8LxZ2g6B7TSNljgllFDJ0vkBwutNpNIsBhJHuReDBmjEJUskLTn5YgWbPsNQJwt4awSbmCrB+plpSdgqbsptR/BrwA3LFBXJ4+3CIgLToqSgCiGRbmPipl9+k59Oib3zo2SCOUC+n0g08uXRGSuGeUK+jZ/424LZhvBBwmuQMOdy/H/AYE2bvpDBCobzSkoz7weomIH8yZpsRD4WaVIuOIcSYXtEeIqfBzxKrmmTDgoSAMNdVwn3Ir9Ly/b0aHUA8wxoKww8oR/ohkC4Ia+NtAPXhlRs0NDgxYsBHEMotse7GppIclntXxFIBl4nKj9QsdgklqAYUy2wwfrXmc/q8lujR5ewCEtRwy6+72OQl5BDHnCQ9zPTnIR931aoFelYj7wPl/+SWPzD438WmOa+2x5Z+Z6ltdvMT2x633yNVIcLlhPx9zNQpofuaHMFBjlccVVBSLdZE8LpVFxJ1T7frF83M3yryhkAuQzqcyZG3MfqSuqT2FwLmFe+YXsIKdi6AS4Ov/8u24zMuE05V/zZjah7Lud2ALRtehxBRLcRjxcPUg6+Y/50GbouYTNWi/5MQgymV/CxiAw7cX9p8seSpKljRU=همراه')">📋 کپی</button></div> اول</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@appxa</span>
             <span class="datetime">2026-04-29 01:10:07</span>
         </div>
-        <div class="text">slipnet-enc://AcELVKN/BYYRfYQddXqkqa3SBIoPl3cOzgErWunxLhx1VcC14fOMwjDdy6UNPxvmgWFS9sz6ottRlakOIbBvH1VVmr6x/RnPZ86C4gE0otH5nSkbYLYvbrj+VdCglb34vgoPyNbWLo37xhG0BQg1AajeZ8/oBb5u/vNWI2zXGL3e1xAzcigM7SKf9cScMG4b7GKx+jmKmMNXk17dNkbxlIQtx59+Qp9v+jIUXaFAkgrY0CHyFqBhSB8Ix/i3D1WvQWc5RULo583hkQeotXb1EL83a2VE8a3Z1lMJy4Z6kfb9P0bbZz8clvJWuj30zdUGTBkXTVJyDejRsdvvDuqwFgMV94jFdrO2NIAyrMlIoajGDY7RBMhEwH/r9md3ZakWEGiAB8XFCr6iWt0mCmWVHvwkG1tnVMY9KpuEJM8G3jU1Cs/kHFaPSTMppxWLG7pjpPybY85VLCLDnMoEHdSEiNVTJAcm5hxhrOa3/q2vX1B8TPLOZVY/LNivm6gEXI5guAN0K4pet8+k9LxJzpphe0P8uft2ne+b2FjDzyH+wDWQgCLyKIozqnMtqaRFnTP96HX0W0svNlOB1eVWH4VFikMlvu1EsgnkuqgQ8cNpzh5Z3/xH70E5PjwYGlOONk2poL6s9eL97r9IzJ6sj69rHZ+QUHg1lx090CzJmmu+ZlUDIbMtJnfkaKBRRs41UgGfoCjTfcjAC2NGMAP91jqhuaKYxQMaMCheycvdA0yeZ0FqR1hKgpxn5IvBj4GkSe1sIdghVhxTهمراه اول</div>
+        <div class="text"><div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AcELVKN/BYYRfYQddXqkqa3SBIoPl3cOzgErWunxLhx1VcC14fOMwjDdy6UNPxvmgWFS9sz6ottRlakOIbBvH1VVmr6x/RnPZ86C4gE0otH5nSkbYLYvbrj+VdCglb34vgoPyNbWLo37xhG0BQg1AajeZ8/oBb5u/vNWI2zXGL3e1xAzcigM7SKf9cScMG4b7GKx+jmKmMNXk17dNkbxlIQtx59+Qp9v+jIUXaFAkgrY0CHyFqBhSB8Ix/i3D1WvQWc5RULo583hkQeotXb1EL83a2VE8a3Z1lMJy4Z6kfb9P0bbZz8clvJWuj30zdUGTBkXTVJyDejRsdvvDuqwFgMV94jFdrO2NIAyrMlIoajGDY7RBMhEwH/r9md3ZakWEGiAB8XFCr6iWt0mCmWVHvwkG1tnVMY9KpuEJM8G3jU1Cs/kHFaPSTMppxWLG7pjpPybY85VLCLDnMoEHdSEiNVTJAcm5hxhrOa3/q2vX1B8TPLOZVY/LNivm6gEXI5guAN0K4pet8+k9LxJzpphe0P8uft2ne+b2FjDzyH+wDWQgCLyKIozqnMtqaRFnTP96HX0W0svNlOB1eVWH4VFikMlvu1EsgnkuqgQ8cNpzh5Z3/xH70E5PjwYGlOONk2poL6s9eL97r9IzJ6sj69rHZ+QUHg1lx090CzJmmu+ZlUDIbMtJnfkaKBRRs41UgGfoCjTfcjAC2NGMAP91jqhuaKYxQMaMCheycvdA0yeZ0FqR1hKgpxn5IvBj4GkSe1sIdghVhxTهمراه</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AcELVKN/BYYRfYQddXqkqa3SBIoPl3cOzgErWunxLhx1VcC14fOMwjDdy6UNPxvmgWFS9sz6ottRlakOIbBvH1VVmr6x/RnPZ86C4gE0otH5nSkbYLYvbrj+VdCglb34vgoPyNbWLo37xhG0BQg1AajeZ8/oBb5u/vNWI2zXGL3e1xAzcigM7SKf9cScMG4b7GKx+jmKmMNXk17dNkbxlIQtx59+Qp9v+jIUXaFAkgrY0CHyFqBhSB8Ix/i3D1WvQWc5RULo583hkQeotXb1EL83a2VE8a3Z1lMJy4Z6kfb9P0bbZz8clvJWuj30zdUGTBkXTVJyDejRsdvvDuqwFgMV94jFdrO2NIAyrMlIoajGDY7RBMhEwH/r9md3ZakWEGiAB8XFCr6iWt0mCmWVHvwkG1tnVMY9KpuEJM8G3jU1Cs/kHFaPSTMppxWLG7pjpPybY85VLCLDnMoEHdSEiNVTJAcm5hxhrOa3/q2vX1B8TPLOZVY/LNivm6gEXI5guAN0K4pet8+k9LxJzpphe0P8uft2ne+b2FjDzyH+wDWQgCLyKIozqnMtqaRFnTP96HX0W0svNlOB1eVWH4VFikMlvu1EsgnkuqgQ8cNpzh5Z3/xH70E5PjwYGlOONk2poL6s9eL97r9IzJ6sj69rHZ+QUHg1lx090CzJmmu+ZlUDIbMtJnfkaKBRRs41UgGfoCjTfcjAC2NGMAP91jqhuaKYxQMaMCheycvdA0yeZ0FqR1hKgpxn5IvBj4GkSe1sIdghVhxTهمراه')">📋 کپی</button></div> اول</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@appxa</span>
             <span class="datetime">2026-04-29 01:17:47</span>
         </div>
-        <div class="text">slipnet-enc://AcGXL1eW/ytqOutxCyTQ+2JcrAmi8oDdaSodUOXWnXftgAnfiM0cBpqk9r8qt/OTwJaKWUcnIIFc6aTxwRt1/lf2xjIPneLpHEtOtKdRsIfUY63igD54EWS/ADNmyFgQWgKubSLsYAlWhKUmXCyn45G4avfo+EQ22hIQ68Sld+qrmnmapJDsn898FpaSFDBUOLI2fZVemahy0Bf/hxIBl940IL+lHIEEpes7Froi5JkaoPimcVrK/3Tcxg/dbcxoqyntiGGkOkahmsQygn/mra/jtcb+Y6ImcaJvAIo8PwwSr1lenAuyZMfccw4X8TzC5znYU73v31Di9rgyUw5xWzV6yGGfzmIrtgg5Oi0XzBkmTiVGceRWMGd7SYIsf5AfLGSVrdwEB1O9YIvTR/uqKW+JgATvXQDLguUJYPMfUBszi2wzHK6+vhGcAemk6dOMBGVPyDIPBE/d0nHChit0ULMIcXIBD7qKkApMTYFKYdbQCfz8qnt5gG2HBae3nfSdXDAB1TkxtbCi1s7D8dgP9WK36u2grXyf1BdGUs0=همراه اولاسلیپ استریم</div>
+        <div class="text"><div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AcGXL1eW/ytqOutxCyTQ+2JcrAmi8oDdaSodUOXWnXftgAnfiM0cBpqk9r8qt/OTwJaKWUcnIIFc6aTxwRt1/lf2xjIPneLpHEtOtKdRsIfUY63igD54EWS/ADNmyFgQWgKubSLsYAlWhKUmXCyn45G4avfo+EQ22hIQ68Sld+qrmnmapJDsn898FpaSFDBUOLI2fZVemahy0Bf/hxIBl940IL+lHIEEpes7Froi5JkaoPimcVrK/3Tcxg/dbcxoqyntiGGkOkahmsQygn/mra/jtcb+Y6ImcaJvAIo8PwwSr1lenAuyZMfccw4X8TzC5znYU73v31Di9rgyUw5xWzV6yGGfzmIrtgg5Oi0XzBkmTiVGceRWMGd7SYIsf5AfLGSVrdwEB1O9YIvTR/uqKW+JgATvXQDLguUJYPMfUBszi2wzHK6+vhGcAemk6dOMBGVPyDIPBE/d0nHChit0ULMIcXIBD7qKkApMTYFKYdbQCfz8qnt5gG2HBae3nfSdXDAB1TkxtbCi1s7D8dgP9WK36u2grXyf1BdGUs0=همراه</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AcGXL1eW/ytqOutxCyTQ+2JcrAmi8oDdaSodUOXWnXftgAnfiM0cBpqk9r8qt/OTwJaKWUcnIIFc6aTxwRt1/lf2xjIPneLpHEtOtKdRsIfUY63igD54EWS/ADNmyFgQWgKubSLsYAlWhKUmXCyn45G4avfo+EQ22hIQ68Sld+qrmnmapJDsn898FpaSFDBUOLI2fZVemahy0Bf/hxIBl940IL+lHIEEpes7Froi5JkaoPimcVrK/3Tcxg/dbcxoqyntiGGkOkahmsQygn/mra/jtcb+Y6ImcaJvAIo8PwwSr1lenAuyZMfccw4X8TzC5znYU73v31Di9rgyUw5xWzV6yGGfzmIrtgg5Oi0XzBkmTiVGceRWMGd7SYIsf5AfLGSVrdwEB1O9YIvTR/uqKW+JgATvXQDLguUJYPMfUBszi2wzHK6+vhGcAemk6dOMBGVPyDIPBE/d0nHChit0ULMIcXIBD7qKkApMTYFKYdbQCfz8qnt5gG2HBae3nfSdXDAB1TkxtbCi1s7D8dgP9WK36u2grXyf1BdGUs0=همراه')">📋 کپی</button></div> اولاسلیپ استریم</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@IRNOTPHONE</span>
             <span class="datetime">2026-04-28 12:12:55</span>
         </div>
-        <div class="text">SlipstreamServer[EP4]slipnet-enc://AeCM/5FSFmneWtqRFk/v9sQ+qNS9evwl9+LZKQPJnTUbiCvOjPK+ZV0NFk5WjVMOAR0frXzlGkcqix+XH/7fxIEPJYAx8lKH3V/0Jhwf3ReqDY6uGdw8jHwswjM9DpODOamXVoST2R5LnOcwr9qdSzuD3hh1KV8O7Q02z5gjF8AdgQP0SgfqeVHyeIFLPn0Vje/4WerK14I7fdXkuF8Ru4WsnZ3W1G1CN4OoKzWSi0WTbGjliL3nENrW8Vm5O2wHOb5mNjHwn2w3DduzT1O/I6HjaXdLdAyuAruN9H+CsGvcAb5apvw2FNRezHVEPJmxRq7NRzEQv6U0IdpTnwFcDZulLSaTBUggXB7bGkm0IetMBjTgNCDPMmj1Ukpby6haXUc2hAdvB7rk/WgxpveSCCYyPHHqGtlPOeIIy84tS6IPOPo2EbPVGxDT89if0UqoqVgG/NvHBdcg3NZ9ThPHjZjs5JAsGlTKAsrOMO5rlPPm/OnDa0tUaECBZxLkYvoBoIRkXi1Qpk/qIrHYRTRmerqLgsBSgBT3fFWyuIMofPwQ21Upr8E=@IRNOTPHONE@EP_NOT</div>
+        <div class="text">SlipstreamServer[EP4]<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AeCM/5FSFmneWtqRFk/v9sQ+qNS9evwl9+LZKQPJnTUbiCvOjPK+ZV0NFk5WjVMOAR0frXzlGkcqix+XH/7fxIEPJYAx8lKH3V/0Jhwf3ReqDY6uGdw8jHwswjM9DpODOamXVoST2R5LnOcwr9qdSzuD3hh1KV8O7Q02z5gjF8AdgQP0SgfqeVHyeIFLPn0Vje/4WerK14I7fdXkuF8Ru4WsnZ3W1G1CN4OoKzWSi0WTbGjliL3nENrW8Vm5O2wHOb5mNjHwn2w3DduzT1O/I6HjaXdLdAyuAruN9H+CsGvcAb5apvw2FNRezHVEPJmxRq7NRzEQv6U0IdpTnwFcDZulLSaTBUggXB7bGkm0IetMBjTgNCDPMmj1Ukpby6haXUc2hAdvB7rk/WgxpveSCCYyPHHqGtlPOeIIy84tS6IPOPo2EbPVGxDT89if0UqoqVgG/NvHBdcg3NZ9ThPHjZjs5JAsGlTKAsrOMO5rlPPm/OnDa0tUaECBZxLkYvoBoIRkXi1Qpk/qIrHYRTRmerqLgsBSgBT3fFWyuIMofPwQ21Upr8E=@IRNOTPHONE@EP_NOT</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AeCM/5FSFmneWtqRFk/v9sQ+qNS9evwl9+LZKQPJnTUbiCvOjPK+ZV0NFk5WjVMOAR0frXzlGkcqix+XH/7fxIEPJYAx8lKH3V/0Jhwf3ReqDY6uGdw8jHwswjM9DpODOamXVoST2R5LnOcwr9qdSzuD3hh1KV8O7Q02z5gjF8AdgQP0SgfqeVHyeIFLPn0Vje/4WerK14I7fdXkuF8Ru4WsnZ3W1G1CN4OoKzWSi0WTbGjliL3nENrW8Vm5O2wHOb5mNjHwn2w3DduzT1O/I6HjaXdLdAyuAruN9H+CsGvcAb5apvw2FNRezHVEPJmxRq7NRzEQv6U0IdpTnwFcDZulLSaTBUggXB7bGkm0IetMBjTgNCDPMmj1Ukpby6haXUc2hAdvB7rk/WgxpveSCCYyPHHqGtlPOeIIy84tS6IPOPo2EbPVGxDT89if0UqoqVgG/NvHBdcg3NZ9ThPHjZjs5JAsGlTKAsrOMO5rlPPm/OnDa0tUaECBZxLkYvoBoIRkXi1Qpk/qIrHYRTRmerqLgsBSgBT3fFWyuIMofPwQ21Upr8E=@IRNOTPHONE@EP_NOT')">📋 کپی</button></div></div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@IRNOTPHONE</span>
             <span class="datetime">2026-04-28 12:16:45</span>
         </div>
-        <div class="text">NoizDNS+SSH〽️-TCPActive✅Server[NS2.9]slipnet-enc://ATvVqub1ZKYyJRrX+H54F2+brHRBURsjV3hBER9A7SiSqVV1z3dPtffLzNKgPH/NLy779lZ2lb3QtOBFymRXN5i8GTfok+UvSNePvypH4Nd+5YsMowX3gD5eZ7SMbEU6W1PthZxeBWyDPz2dc0eXCbY4G0cJgBo8VjpZBk2rBTWWcdrA+1EwIpYZuJaVaFfNaC4ZbMQ2KNWQPdptGU/rp5Di9JTQNm7XAdBBAvLefFRvzcFOv+S29jE2Ks+oOVEt5WL22BQurmeOMjKpz7pOJz3W4j+wmg7uqJRGTDhJS2U+YsuJVTUj11OuabmAqN2zpQqYSY+0pFsKK0SXSZeKE/LwZEjPhtyWerY93CylsmsEDHp/NmP3z6y22LSTS8KYkxdUYMNizF+oH1Gr1vTG+0w/+Kz8imwCfHReRXdG8Pch+13XOloixbbmj1rina29ky4wadJJ0u6vHGGksUPfbnhCsij4G7yuiUZwgz4YeRvKPJ8p5n1Dhsx8U0urDmd20Brx/BMghhaCwxUepHYvSrpQrLQfuOTj4weyj8P/Al5zijlUJpzHdnM+1XZo3WMOLu6+VDH++Xhjw5CkdHVP5ng5uya0LjQvEHWBPRh7tS75F9csPXN0aGBWA6XtwdCCZYrYBiZeIpLuljQkoU5UlRL7Lwh2yoPH4jAw/y6WRR03OyWT8wCI/IHeaSqM26cO7REH0PJZsiHMYUXo99D4w+1FiwftHSMVRRfEhmEhYmF3nH12d1i7+bumw8hReEUEW24H4WAnKRlCdZMJhNPIrto0mJhwQJ3M9UPAbKeO@IRNOTPHONE@EP_NOT</div>
+        <div class="text">NoizDNS+SSH〽️-TCPActive✅Server[NS2.9]<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://ATvVqub1ZKYyJRrX+H54F2+brHRBURsjV3hBER9A7SiSqVV1z3dPtffLzNKgPH/NLy779lZ2lb3QtOBFymRXN5i8GTfok+UvSNePvypH4Nd+5YsMowX3gD5eZ7SMbEU6W1PthZxeBWyDPz2dc0eXCbY4G0cJgBo8VjpZBk2rBTWWcdrA+1EwIpYZuJaVaFfNaC4ZbMQ2KNWQPdptGU/rp5Di9JTQNm7XAdBBAvLefFRvzcFOv+S29jE2Ks+oOVEt5WL22BQurmeOMjKpz7pOJz3W4j+wmg7uqJRGTDhJS2U+YsuJVTUj11OuabmAqN2zpQqYSY+0pFsKK0SXSZeKE/LwZEjPhtyWerY93CylsmsEDHp/NmP3z6y22LSTS8KYkxdUYMNizF+oH1Gr1vTG+0w/+Kz8imwCfHReRXdG8Pch+13XOloixbbmj1rina29ky4wadJJ0u6vHGGksUPfbnhCsij4G7yuiUZwgz4YeRvKPJ8p5n1Dhsx8U0urDmd20Brx/BMghhaCwxUepHYvSrpQrLQfuOTj4weyj8P/Al5zijlUJpzHdnM+1XZo3WMOLu6+VDH++Xhjw5CkdHVP5ng5uya0LjQvEHWBPRh7tS75F9csPXN0aGBWA6XtwdCCZYrYBiZeIpLuljQkoU5UlRL7Lwh2yoPH4jAw/y6WRR03OyWT8wCI/IHeaSqM26cO7REH0PJZsiHMYUXo99D4w+1FiwftHSMVRRfEhmEhYmF3nH12d1i7+bumw8hReEUEW24H4WAnKRlCdZMJhNPIrto0mJhwQJ3M9UPAbKeO@IRNOTPHONE@EP_NOT</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://ATvVqub1ZKYyJRrX+H54F2+brHRBURsjV3hBER9A7SiSqVV1z3dPtffLzNKgPH/NLy779lZ2lb3QtOBFymRXN5i8GTfok+UvSNePvypH4Nd+5YsMowX3gD5eZ7SMbEU6W1PthZxeBWyDPz2dc0eXCbY4G0cJgBo8VjpZBk2rBTWWcdrA+1EwIpYZuJaVaFfNaC4ZbMQ2KNWQPdptGU/rp5Di9JTQNm7XAdBBAvLefFRvzcFOv+S29jE2Ks+oOVEt5WL22BQurmeOMjKpz7pOJz3W4j+wmg7uqJRGTDhJS2U+YsuJVTUj11OuabmAqN2zpQqYSY+0pFsKK0SXSZeKE/LwZEjPhtyWerY93CylsmsEDHp/NmP3z6y22LSTS8KYkxdUYMNizF+oH1Gr1vTG+0w/+Kz8imwCfHReRXdG8Pch+13XOloixbbmj1rina29ky4wadJJ0u6vHGGksUPfbnhCsij4G7yuiUZwgz4YeRvKPJ8p5n1Dhsx8U0urDmd20Brx/BMghhaCwxUepHYvSrpQrLQfuOTj4weyj8P/Al5zijlUJpzHdnM+1XZo3WMOLu6+VDH++Xhjw5CkdHVP5ng5uya0LjQvEHWBPRh7tS75F9csPXN0aGBWA6XtwdCCZYrYBiZeIpLuljQkoU5UlRL7Lwh2yoPH4jAw/y6WRR03OyWT8wCI/IHeaSqM26cO7REH0PJZsiHMYUXo99D4w+1FiwftHSMVRRfEhmEhYmF3nH12d1i7+bumw8hReEUEW24H4WAnKRlCdZMJhNPIrto0mJhwQJ3M9UPAbKeO@IRNOTPHONE@EP_NOT')">📋 کپی</button></div></div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@IRNOTPHONE</span>
             <span class="datetime">2026-04-28 12:21:48</span>
         </div>
-        <div class="text">NoizDNS〽️-TCPActive✅Server[NS3.0]slipnet-enc://AfY0hVkHeK/AegGAHWWEBveza2SOMV7UzhxsowI/9EGRLC3gNxcmqE0HjKlMnET3Xx9WmiA9n4IWOUDQT0gabNuHDvMh1/tEgzvF0ueavX2RCkVFHIj/2Ro1fNv0kmQTLrLTTXihL+W4XJhG8s+jGNV7v8eSOoOr1AQQcNj0Sk8gCr+BVr6BGQUGoSQ/gmKoXU+I5iBOPPBR70WN52JVFEXKQ3bqTbmqjx/H19I95kBxWpYA6yaTL2WivtO8sI3uyjK8GASsTSwIs2xWl2mzaVFssp7PVSnW2PiqBxIRxjPctC8s5sszRp88PxQuMTo1MkVM5hOLpMfVUIYk9/agAHw/9a8aWc7nYl2qpUArQKwZ9qvJ4vzLPOExeOhJAT4pBPgpN8YSClnR8MZpPvSej3PCy5pbFIPLaSMX1/vY4zMitV31puZXSemhBSbPyefdHkeOLOp1L8rzh3xJl1saNZUxIEiLVEO1Cerq8l2SKZ/foTWZvODVYTecqYZkhxzHbyUuyCwEN3G52pfOjWxAvMkBkHJsxRM0345+XZK+N6b7qDamRx6jtQQ6ZtwOYQ5MrugsAy+rdc7fqVas71g3oa6TjCpk3lluZBSm/tPKzBxxhtYUOdztHvqVJ4OD6pXMxTcjUWCPBFtvFOXuaW9h0kvCn4jJNigvFhO01fhsze6bTTstwzYLWLCRKQ==@IRNOTPHONE@EP_NOT</div>
+        <div class="text">NoizDNS〽️-TCPActive✅Server[NS3.0]<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AfY0hVkHeK/AegGAHWWEBveza2SOMV7UzhxsowI/9EGRLC3gNxcmqE0HjKlMnET3Xx9WmiA9n4IWOUDQT0gabNuHDvMh1/tEgzvF0ueavX2RCkVFHIj/2Ro1fNv0kmQTLrLTTXihL+W4XJhG8s+jGNV7v8eSOoOr1AQQcNj0Sk8gCr+BVr6BGQUGoSQ/gmKoXU+I5iBOPPBR70WN52JVFEXKQ3bqTbmqjx/H19I95kBxWpYA6yaTL2WivtO8sI3uyjK8GASsTSwIs2xWl2mzaVFssp7PVSnW2PiqBxIRxjPctC8s5sszRp88PxQuMTo1MkVM5hOLpMfVUIYk9/agAHw/9a8aWc7nYl2qpUArQKwZ9qvJ4vzLPOExeOhJAT4pBPgpN8YSClnR8MZpPvSej3PCy5pbFIPLaSMX1/vY4zMitV31puZXSemhBSbPyefdHkeOLOp1L8rzh3xJl1saNZUxIEiLVEO1Cerq8l2SKZ/foTWZvODVYTecqYZkhxzHbyUuyCwEN3G52pfOjWxAvMkBkHJsxRM0345+XZK+N6b7qDamRx6jtQQ6ZtwOYQ5MrugsAy+rdc7fqVas71g3oa6TjCpk3lluZBSm/tPKzBxxhtYUOdztHvqVJ4OD6pXMxTcjUWCPBFtvFOXuaW9h0kvCn4jJNigvFhO01fhsze6bTTstwzYLWLCRKQ==@IRNOTPHONE@EP_NOT</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AfY0hVkHeK/AegGAHWWEBveza2SOMV7UzhxsowI/9EGRLC3gNxcmqE0HjKlMnET3Xx9WmiA9n4IWOUDQT0gabNuHDvMh1/tEgzvF0ueavX2RCkVFHIj/2Ro1fNv0kmQTLrLTTXihL+W4XJhG8s+jGNV7v8eSOoOr1AQQcNj0Sk8gCr+BVr6BGQUGoSQ/gmKoXU+I5iBOPPBR70WN52JVFEXKQ3bqTbmqjx/H19I95kBxWpYA6yaTL2WivtO8sI3uyjK8GASsTSwIs2xWl2mzaVFssp7PVSnW2PiqBxIRxjPctC8s5sszRp88PxQuMTo1MkVM5hOLpMfVUIYk9/agAHw/9a8aWc7nYl2qpUArQKwZ9qvJ4vzLPOExeOhJAT4pBPgpN8YSClnR8MZpPvSej3PCy5pbFIPLaSMX1/vY4zMitV31puZXSemhBSbPyefdHkeOLOp1L8rzh3xJl1saNZUxIEiLVEO1Cerq8l2SKZ/foTWZvODVYTecqYZkhxzHbyUuyCwEN3G52pfOjWxAvMkBkHJsxRM0345+XZK+N6b7qDamRx6jtQQ6ZtwOYQ5MrugsAy+rdc7fqVas71g3oa6TjCpk3lluZBSm/tPKzBxxhtYUOdztHvqVJ4OD6pXMxTcjUWCPBFtvFOXuaW9h0kvCn4jJNigvFhO01fhsze6bTTstwzYLWLCRKQ==@IRNOTPHONE@EP_NOT')">📋 کپی</button></div></div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@IRNOTPHONE</span>
             <span class="datetime">2026-04-28 12:33:38</span>
         </div>
-        <div class="text">DNSTT-TCPServer[EP10]slipnet-enc://AVWkUc1JqbtAjFT2IoA4YlNRdJ+OvawRvYIP/ZMGcfZBPens5oe+le1lc7qoYNz8gX1nDBJFDjs/jhuUBaAtlI56v9AaPPXUUT0KkhpwoPSHRjiMUESC0jGctJEvU71uBSYc99c9195uSPx6T2y6hL2SfsEhB2kmQQOQd74I6gT88zHPkUFLZ4+BXcgXnLJTnEf6Gy/UxAwuP1ORoMX03Xkq1nlbWbFy1QnMm3ZGDD7fGsguL1vxMgNGIJ/1llto/A3q0WHhqPqOl+JTz02CDmVJjl5uF4kJN4BcvHAAe5UB6qEQUe2Chw7B9w++cIddtcwJqiUAO8PtjXqRBwHoE0VeJ0Gba6IYM2gusJDz0+DAKAx9fnn0MpsyredLotmFeaaOdgSJMz97QDbrTrVl4zEU3ICZM3EqMc8B7dVwE4EndqZZ0hx5wSYIfwB+SoKG/CyQ2YgGlc7pYRCczWRagfiI3qJPnnSgzzAUwtrpuUmVZqbF8+Q5f2WR/QmVQFBivybkIHUj6zzD4SiNlh3N1OOWKoDbP/O4e8bWTa4PTEhnIrHu8yq6LxmpANSS112Vk5uirDCJYKDuc8Ehw1Bwa2KXab8yj8NPsXKPJEdmh0TFEdH0iK9Pmc0Ch6kGidK33zO9A4dqBa4=@IRNOTPHONE@EP_NOT</div>
+        <div class="text">DNSTT-TCPServer[EP10]<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AVWkUc1JqbtAjFT2IoA4YlNRdJ+OvawRvYIP/ZMGcfZBPens5oe+le1lc7qoYNz8gX1nDBJFDjs/jhuUBaAtlI56v9AaPPXUUT0KkhpwoPSHRjiMUESC0jGctJEvU71uBSYc99c9195uSPx6T2y6hL2SfsEhB2kmQQOQd74I6gT88zHPkUFLZ4+BXcgXnLJTnEf6Gy/UxAwuP1ORoMX03Xkq1nlbWbFy1QnMm3ZGDD7fGsguL1vxMgNGIJ/1llto/A3q0WHhqPqOl+JTz02CDmVJjl5uF4kJN4BcvHAAe5UB6qEQUe2Chw7B9w++cIddtcwJqiUAO8PtjXqRBwHoE0VeJ0Gba6IYM2gusJDz0+DAKAx9fnn0MpsyredLotmFeaaOdgSJMz97QDbrTrVl4zEU3ICZM3EqMc8B7dVwE4EndqZZ0hx5wSYIfwB+SoKG/CyQ2YgGlc7pYRCczWRagfiI3qJPnnSgzzAUwtrpuUmVZqbF8+Q5f2WR/QmVQFBivybkIHUj6zzD4SiNlh3N1OOWKoDbP/O4e8bWTa4PTEhnIrHu8yq6LxmpANSS112Vk5uirDCJYKDuc8Ehw1Bwa2KXab8yj8NPsXKPJEdmh0TFEdH0iK9Pmc0Ch6kGidK33zO9A4dqBa4=@IRNOTPHONE@EP_NOT</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AVWkUc1JqbtAjFT2IoA4YlNRdJ+OvawRvYIP/ZMGcfZBPens5oe+le1lc7qoYNz8gX1nDBJFDjs/jhuUBaAtlI56v9AaPPXUUT0KkhpwoPSHRjiMUESC0jGctJEvU71uBSYc99c9195uSPx6T2y6hL2SfsEhB2kmQQOQd74I6gT88zHPkUFLZ4+BXcgXnLJTnEf6Gy/UxAwuP1ORoMX03Xkq1nlbWbFy1QnMm3ZGDD7fGsguL1vxMgNGIJ/1llto/A3q0WHhqPqOl+JTz02CDmVJjl5uF4kJN4BcvHAAe5UB6qEQUe2Chw7B9w++cIddtcwJqiUAO8PtjXqRBwHoE0VeJ0Gba6IYM2gusJDz0+DAKAx9fnn0MpsyredLotmFeaaOdgSJMz97QDbrTrVl4zEU3ICZM3EqMc8B7dVwE4EndqZZ0hx5wSYIfwB+SoKG/CyQ2YgGlc7pYRCczWRagfiI3qJPnnSgzzAUwtrpuUmVZqbF8+Q5f2WR/QmVQFBivybkIHUj6zzD4SiNlh3N1OOWKoDbP/O4e8bWTa4PTEhnIrHu8yq6LxmpANSS112Vk5uirDCJYKDuc8Ehw1Bwa2KXab8yj8NPsXKPJEdmh0TFEdH0iK9Pmc0Ch6kGidK33zO9A4dqBa4=@IRNOTPHONE@EP_NOT')">📋 کپی</button></div></div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@IRNOTPHONE</span>
             <span class="datetime">2026-04-28 12:38:44</span>
         </div>
-        <div class="text">NoizDNS+SSH〽️-TCPActive✅-IrancellServer[NS3.1]slipnet-enc://AZkiY6fVK9WrrFiriZCZFidFk3q2svTICV2yDXn5sV0AlzrJr6eHbMe74Ev3hu/kT3f6cuTr/bKkqnZMVYVY9T2tARD9c7pJOk+aVBV6Zt2oh+7ApchxlTf86TsFDReZtKBbrELNxa6H165IevVirfP52hx9Eft7yH0Ru8aEuLV+WZy5PqAuBe9V53WlXni4J517a07yjcROlw+IIeuUQLkpjBp8laZNhu5cuVxM2WgOJhwtX6WLmAXEL4EfLnCVdNbCWI6icD1iAQvbqMdp8W4oLIXk5EJAfCuIOODorlEyawH8yRkqnFE2N79GjyE/G1F4IB0hoIoDpsDPBc0/KxXSt7tuYsT0rxWpzJdqVTbBuEXtPZtJLfBMWe+pqjmd22eccAm/Ia0IGL7S9J2IaKJPruwed+5GeCtbgAbYfBPExZrPX6VWKwMg19xnB8plTpymyab0y/iipaa6VF27U38YdRgW3lXmGqzu5E7odvTpl8EknwRV8JsUz/lzuyK2JnFesl85YDWv2/RMr//nyW1Wh8ge1wzyA+RHytR9NPJ3fJh1YoBUI9Kr0XPc2Y4uoZzR1QnscPnbVySh4Tso5aENjRoW1WVtfuWVkQv2wtzms2t+k1IJW+DkNhMAsg+KIYlnb8r+nJlCzcGc91Shz51zw9b/KoVqmQBE7PrUEyeulMJ9jUL63jpq41oApDWNdgWkGU2QT4RAlb89YLJAvbbA2x1WCIvCmzSNyO3HYU2j0OOLqTNKXDE=@IRNOTPHONE@EP_NOT</div>
+        <div class="text">NoizDNS+SSH〽️-TCPActive✅-IrancellServer[NS3.1]<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AZkiY6fVK9WrrFiriZCZFidFk3q2svTICV2yDXn5sV0AlzrJr6eHbMe74Ev3hu/kT3f6cuTr/bKkqnZMVYVY9T2tARD9c7pJOk+aVBV6Zt2oh+7ApchxlTf86TsFDReZtKBbrELNxa6H165IevVirfP52hx9Eft7yH0Ru8aEuLV+WZy5PqAuBe9V53WlXni4J517a07yjcROlw+IIeuUQLkpjBp8laZNhu5cuVxM2WgOJhwtX6WLmAXEL4EfLnCVdNbCWI6icD1iAQvbqMdp8W4oLIXk5EJAfCuIOODorlEyawH8yRkqnFE2N79GjyE/G1F4IB0hoIoDpsDPBc0/KxXSt7tuYsT0rxWpzJdqVTbBuEXtPZtJLfBMWe+pqjmd22eccAm/Ia0IGL7S9J2IaKJPruwed+5GeCtbgAbYfBPExZrPX6VWKwMg19xnB8plTpymyab0y/iipaa6VF27U38YdRgW3lXmGqzu5E7odvTpl8EknwRV8JsUz/lzuyK2JnFesl85YDWv2/RMr//nyW1Wh8ge1wzyA+RHytR9NPJ3fJh1YoBUI9Kr0XPc2Y4uoZzR1QnscPnbVySh4Tso5aENjRoW1WVtfuWVkQv2wtzms2t+k1IJW+DkNhMAsg+KIYlnb8r+nJlCzcGc91Shz51zw9b/KoVqmQBE7PrUEyeulMJ9jUL63jpq41oApDWNdgWkGU2QT4RAlb89YLJAvbbA2x1WCIvCmzSNyO3HYU2j0OOLqTNKXDE=@IRNOTPHONE@EP_NOT</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AZkiY6fVK9WrrFiriZCZFidFk3q2svTICV2yDXn5sV0AlzrJr6eHbMe74Ev3hu/kT3f6cuTr/bKkqnZMVYVY9T2tARD9c7pJOk+aVBV6Zt2oh+7ApchxlTf86TsFDReZtKBbrELNxa6H165IevVirfP52hx9Eft7yH0Ru8aEuLV+WZy5PqAuBe9V53WlXni4J517a07yjcROlw+IIeuUQLkpjBp8laZNhu5cuVxM2WgOJhwtX6WLmAXEL4EfLnCVdNbCWI6icD1iAQvbqMdp8W4oLIXk5EJAfCuIOODorlEyawH8yRkqnFE2N79GjyE/G1F4IB0hoIoDpsDPBc0/KxXSt7tuYsT0rxWpzJdqVTbBuEXtPZtJLfBMWe+pqjmd22eccAm/Ia0IGL7S9J2IaKJPruwed+5GeCtbgAbYfBPExZrPX6VWKwMg19xnB8plTpymyab0y/iipaa6VF27U38YdRgW3lXmGqzu5E7odvTpl8EknwRV8JsUz/lzuyK2JnFesl85YDWv2/RMr//nyW1Wh8ge1wzyA+RHytR9NPJ3fJh1YoBUI9Kr0XPc2Y4uoZzR1QnscPnbVySh4Tso5aENjRoW1WVtfuWVkQv2wtzms2t+k1IJW+DkNhMAsg+KIYlnb8r+nJlCzcGc91Shz51zw9b/KoVqmQBE7PrUEyeulMJ9jUL63jpq41oApDWNdgWkGU2QT4RAlb89YLJAvbbA2x1WCIvCmzSNyO3HYU2j0OOLqTNKXDE=@IRNOTPHONE@EP_NOT')">📋 کپی</button></div></div>
     </div>
 
     <div class="post">
-        <div>
-            <span class="channel">@IRAN_V2RAY1</span>
-            <span class="datetime">2026-04-23 21:07:26</span>
-        </div>
-        <div class="text">🔴از این سایت زیر میتونید چنل های تلگرام رو با نت ملی برسی کنید🚀https://qeshmyar.com/telegram/⚠️@IRAN_V2RAY1💬</div>
-    </div>
-
-    <div class="post">
-        <div>
-            <span class="channel">@IRAN_V2RAY1</span>
-            <span class="datetime">2026-04-24 10:28:34</span>
-        </div>
-        <div class="text">شرکت OpenAI چت‌جی‌پی‌تی قدرتمند 5.5 را عرضه کرد.عملکرد را ارتقا داده‌اند:اکنون این مدل به خوبی از پس وظایف چندگانه برمی‌آید و زمینه (context) طولانی را بدون از دست دادن رشته کلام حفظ می‌کند.در عین حال، هر اطلاعاتی را پیدا می‌کند، کد می‌نویسد و نتایج کار خود را بررسی می‌کند.فعلاً آزمایشی فقط برای مشترکین پولی در دسترس است، اما قول داده‌اند که در آینده آن را برای همه منتشر کنند.⚠️@IRAN_V2RAY1💬</div>
-    </div>
-
-    <div class="post">
-        <div>
-            <span class="channel">@IRAN_V2RAY1</span>
-            <span class="datetime">2026-04-24 11:13:10</span>
-        </div>
-        <div class="text">📱لینک دانلود داخلی سایفون ( نسخه شیر و خورشید )☀️https://guardnet.ir/f/00e850f9d879🔴رو این نسخه برای من ترکیبی‌ها بهتر کار می‌کنند.🚀⚠️@IRAN_V2RAY1💬</div>
-    </div>
-
-    <div class="post">
-        <div>
-            <span class="channel">@IRAN_V2RAY1</span>
-            <span class="datetime">2026-04-24 13:23:38</span>
-        </div>
-        <div class="text">ما فکر میکردیم تهش دلمون برای قیمت دلار تنگ بشه نه برای ویدیو دیدن توی یوتیوب و اینستا گردی بدون دونستن حجم نت.</div>
-    </div>
-
-    <div class="post">
-        <div>
-            <span class="channel">@IRAN_V2RAY1</span>
-            <span class="datetime">2026-04-24 21:09:45</span>
-        </div>
-        <div class="text">آپدیت لینک‌های دانلود داخلیآخرین تغییرات● کلاینت نکوباکس نسخه v1.4.2● نسخه v460 سایفون پرو● نسخه v5.32 اپ pdaNet● نسخه v4.0.0 کلاینت NetMod● نسخه v15.7.0 اپ every proxyاپ DNS Changer نسخه مود v2.9.2● کلاینت Master DNS GG نسخه v1.0.9کلاینت Exclave نسخه v0.17.34● کلاینت Happ نسخه‌ی v3.18.1 اندروید و ویندوز گیت‌هاب● اسلیپ‌نت نسخه v2.5.2 لایت، فول و کلون گیت‌هاب● کلاینت v2rayNG نسخه v2.1.1 گیت‌هاب● اپلیکیشن MahsaAlert آفلاین نسخه v10 گیت‌هاب● اپلیکیشن MahsaNG نسخه v15 گیت‌هاب🔴ابزار و مدیریت فایل+ (full backup 18 april)🔹Happ — v3.18.1 (universal/win-x64)🔺HTTP Injector — v6.5.0 (universal)🔹InviZible Pro — v7.4.0 (armv8)🔺InviZible Lite — v7.4.0 (armv8)🔸MahsaNG — v15 (armv8)🔺NekoBox — v1.4.2 (armv8/armv7)🆕🔹Netmod — v4.0.0 (armv8/universal/conf)🆕🔸NPVT — v123.1 (armv8/universal/conf)🔺OpenVPN — v3.8.0.45 (armv8)🔹OpenVPN for Android — v0.7.64 (armv8)🔺Orbot — v17.9.1-RC-1 (armv8)🔸Psiphon —v439🔹Psiphon —v453🔺PsiphonPro —v449🔸PsiphonPro —v454🔹PsiphonPro —v458🔺PsiphonPro —v460🔸ShirOkhorshid —v2026.03.17🔹Rostam VPN —v5.0.0🔺SlipNet Lite — v2.5.2 (armv8/armv7/clone)🆕🔹SlipNet Full — v2.5.2 (armv8/armv7/universal)🆕🔺v2rayNG — v2.1.1 (armv8/armv7)🆕🔺v2rayN — v7.20.2 (windows)🔸V2box — v5.3.4 (armv8)🔹WireGuard — v1.0.20 (universal)🔺WG Tunnel — v4.3.1 (armv8)🔸Windscribe — v3.99.2132 (armv8)🔹سرویس‌های دی‌ان‌اس (DNS)🔺DNS Changer — v2.9.2 (universal)🆕🔹IntraDNS — v1.4.1 (armv8)🔸Network Checker — v0.5.0 (armv8)🔸SanDNS — v7.8.0 (universal)🔹Shekan — v2.1.8 (universal)🆕🔸Rethink DNS — v0.5.5-53 (universal)🔺MasterDNS-GG — v1.0.9 (armv8/armv7)🔹VayDNS — v1.2.1 (armv8)🔸Find DNS — v0.2.2.2.1 (win)🔺SNI SpoofingByPatterniha — v1 (win)🆕🔹SNI Spoofing — Rust (win)﻿🔴اپلیکیشن‌های داخلی🔸Snapp —v8.40.0.300🔺Blubank —v3.8.1.1🔹Zarebin browser —v11.57.0🔸Maktabkhune —v2.4.3🔺BitPin — v94.0 (universal)🔹ElementX — v26.03.2 (armv8)🔸Fluffy Chat — v2.4.0 (armv8)🔺TurboTel — v12.4.2 (armv8)🔹Telegram (G-Play) — v12.6.4 (armv8)📱🔸Telegram (Direct) — v12.6.4  (universal)📱﻿🔹اشتراک‌گذاری اینترنت و آموزش‌ها🔸EveryProxy — v15.7.0 (armv8)🆕🔸EveryProxy — v10.5.0 (armv8)🔹PdaNet Android —v5.32🆕🔺PdaNet Windows —v523⚠️@IRAN_V2RAY1💬</div>
-    </div>
-
-    <div class="post">
-        <div>
-            <span class="channel">@SlipNet_decode</span>
-            <span class="datetime">2026-04-28 20:41:13</span>
-        </div>
-        <div class="text">🔐New Shared Profileslipnet-enc://AUvXqIhfT1AOmMGEcdYNp89HRwAhi2DUpfammRy3oCBKwUJOSjf7Sixbd01EwB307fRZKfdXJFQMdI0zllQVbbgSh5BRhgoxECQshKqc9ZRC4t15JSXlACuVFZ3oT63/wZ2Gf2gG3WfblN+VA7Ynhy5wv8Dilkr/ZJqtQNVSBipZnYKQURrQdpHak9ypOnivo91esz+23CXBi0vweUcpBZOQ3ZUARA+Vtw/BiXA9oVhvfnW9PwATNyFzATBIgDXY5K7YYmx91OaCi4XVePljhvtcaiesV4AKM25ELx98T9lCxH2qY5DlUxFI7H0qBWh3GaRfnjF/uc5ugIl69YhO+JZAiBRKcwctrXDhqRO5341egl1UriSVYeD6G08QSTgk339O5MpupMrM38egUoCGKHMrNFSQY2N+OcT/VQQkCpvaGakd0oQ7ESrtQhP5Sc+ep9aR1DMK9xusT7JojBGcsH0vAOnC3F2XRpINVVGqyJn1hbFcxqLoRqf2hi8pu0WBFD/pD6JQeCJjr9zScmhz7gsDhw3VvTykn5UyzEukGh2r5qIOlE1rEE6lGBF2HQWpqgs2KW6TVmUw📢@slipnet_decode</div>
-    </div>
-
-    <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@SlipNet_decode</span>
             <span class="datetime">2026-04-29 04:53:41</span>
         </div>
-        <div class="text">🔐New Shared Profileslipnet-enc://AcgnY14T7WJGMc72u0q1lM8Grqh3pXi7cGhQhBuJU8pIsJQV89+orORnfv07BxJhATOU7Nhv3SMa4bxiC9nqGAz6Sktys42xtP3z5wEcuejDoG+bgQPZtqCS2ffNp7K4Jm38HCOsDvCY5+jSJc4mnJ9ArO0bCQZCOOvIMVO4Vwbsl28iOB8BoNjiPg5ok/igJ/mhtcV+xXZf1T5rnClMQozHu4SsLWq0txHZtR5gSk0rCGdNpN6l9GEQZ/X8MNnL82j0S0qCuA2m98XnSK5/ur2IsS+qGI9IpV8LRjJaO+rE7gmu8L9gpSZapyn5WaQLnGn0AnV7RS9sZR9bP1ntULLI8AgHn9JE7Pj6UO3xIZ7VfyTCKgznUrV+4zZ0Ng+afRThWBRXH3Y29PVuLGalf5BUoN2Dg5bTHr0xO8xyBnEyWr04aG9WF8VLnCyGcba6/Hb52OFCWfXtvMqX6wDhrpgWm01hYE34ZS0IG2jlWYg+bHNKs/6/1AlItWa95wj5+U7MirEZtMZnf+FetJNXX30YGimahPCBfbCyPFCRlU2iXxZsRJKukvV6z1wUenBr2QV9uHlGbkw=📢@slipnet_decode</div>
+        <div class="text">🔐 New Shared Profile<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AcgnY14T7WJGMc72u0q1lM8Grqh3pXi7cGhQhBuJU8pIsJQV89+orORnfv07BxJhATOU7Nhv3SMa4bxiC9nqGAz6Sktys42xtP3z5wEcuejDoG+bgQPZtqCS2ffNp7K4Jm38HCOsDvCY5+jSJc4mnJ9ArO0bCQZCOOvIMVO4Vwbsl28iOB8BoNjiPg5ok/igJ/mhtcV+xXZf1T5rnClMQozHu4SsLWq0txHZtR5gSk0rCGdNpN6l9GEQZ/X8MNnL82j0S0qCuA2m98XnSK5/ur2IsS+qGI9IpV8LRjJaO+rE7gmu8L9gpSZapyn5WaQLnGn0AnV7RS9sZR9bP1ntULLI8AgHn9JE7Pj6UO3xIZ7VfyTCKgznUrV+4zZ0Ng+afRThWBRXH3Y29PVuLGalf5BUoN2Dg5bTHr0xO8xyBnEyWr04aG9WF8VLnCyGcba6/Hb52OFCWfXtvMqX6wDhrpgWm01hYE34ZS0IG2jlWYg+bHNKs/6/1AlItWa95wj5+U7MirEZtMZnf+FetJNXX30YGimahPCBfbCyPFCRlU2iXxZsRJKukvV6z1wUenBr2QV9uHlGbkw=📢</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AcgnY14T7WJGMc72u0q1lM8Grqh3pXi7cGhQhBuJU8pIsJQV89+orORnfv07BxJhATOU7Nhv3SMa4bxiC9nqGAz6Sktys42xtP3z5wEcuejDoG+bgQPZtqCS2ffNp7K4Jm38HCOsDvCY5+jSJc4mnJ9ArO0bCQZCOOvIMVO4Vwbsl28iOB8BoNjiPg5ok/igJ/mhtcV+xXZf1T5rnClMQozHu4SsLWq0txHZtR5gSk0rCGdNpN6l9GEQZ/X8MNnL82j0S0qCuA2m98XnSK5/ur2IsS+qGI9IpV8LRjJaO+rE7gmu8L9gpSZapyn5WaQLnGn0AnV7RS9sZR9bP1ntULLI8AgHn9JE7Pj6UO3xIZ7VfyTCKgznUrV+4zZ0Ng+afRThWBRXH3Y29PVuLGalf5BUoN2Dg5bTHr0xO8xyBnEyWr04aG9WF8VLnCyGcba6/Hb52OFCWfXtvMqX6wDhrpgWm01hYE34ZS0IG2jlWYg+bHNKs/6/1AlItWa95wj5+U7MirEZtMZnf+FetJNXX30YGimahPCBfbCyPFCRlU2iXxZsRJKukvV6z1wUenBr2QV9uHlGbkw=📢')">📋 کپی</button></div> @slipnet_decode</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@SlipNet_decode</span>
             <span class="datetime">2026-04-29 04:55:05</span>
         </div>
-        <div class="text">🔐New Shared Profileslipnet-enc://Afzf7TPWbHTOqNgcBssIL8zouW9dOFFyoUujz6+4/JMDl/UDcDtH9L5P/6/s5N7tbvNCSHKhWwHs4LeGoNFIvAAjfYBC31srRQaP9cRSXz/wZ+jZMMEBofbCMCJLNkiFybR5LLrBSE+V0dr7VxOtc1leFC8lDI1DODOi2aV+v8lMwHgdeENsLY+CS53FKdVotOD0a4OAXYYyK3Won5tZLml+BqrQDPJXZlBU7WqsY9jC32NtkOKz+GmIaqK2pba7rMDmihmGERAPxjcOImGvUekM01DvS5jbhRZdhTpL6P0rDMJbJRJIPx3XiWMzCmtZ57mW8euJKRjOTizy7tWXOQBIzbO68k28I82rT9DgaPv+TLk6yxcmgc26U8eKqXhlBp2UXawEjevSQG0yjTlnqGmCJmlZi0OqjD62OCrwYqUj0/NaYfhm0+2HdYLlgrQr+7VI1j1pxVv4Sh0hfzmlRTd3pvDFeDGZCel8oalr1IatxYJJ2CLtFqsmt3+KmlXOxfToVEPF8tgUX9oNTM6hzkNnbaAddoLbsPQiSFt53ZgdztwszVJp8lnzRS7U8+CW7KnGRxOxUR/mtm2Lk5hZn94fTnyQ📢@slipnet_decode</div>
+        <div class="text">🔐 New Shared Profile<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://Afzf7TPWbHTOqNgcBssIL8zouW9dOFFyoUujz6+4/JMDl/UDcDtH9L5P/6/s5N7tbvNCSHKhWwHs4LeGoNFIvAAjfYBC31srRQaP9cRSXz/wZ+jZMMEBofbCMCJLNkiFybR5LLrBSE+V0dr7VxOtc1leFC8lDI1DODOi2aV+v8lMwHgdeENsLY+CS53FKdVotOD0a4OAXYYyK3Won5tZLml+BqrQDPJXZlBU7WqsY9jC32NtkOKz+GmIaqK2pba7rMDmihmGERAPxjcOImGvUekM01DvS5jbhRZdhTpL6P0rDMJbJRJIPx3XiWMzCmtZ57mW8euJKRjOTizy7tWXOQBIzbO68k28I82rT9DgaPv+TLk6yxcmgc26U8eKqXhlBp2UXawEjevSQG0yjTlnqGmCJmlZi0OqjD62OCrwYqUj0/NaYfhm0+2HdYLlgrQr+7VI1j1pxVv4Sh0hfzmlRTd3pvDFeDGZCel8oalr1IatxYJJ2CLtFqsmt3+KmlXOxfToVEPF8tgUX9oNTM6hzkNnbaAddoLbsPQiSFt53ZgdztwszVJp8lnzRS7U8+CW7KnGRxOxUR/mtm2Lk5hZn94fTnyQ📢</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://Afzf7TPWbHTOqNgcBssIL8zouW9dOFFyoUujz6+4/JMDl/UDcDtH9L5P/6/s5N7tbvNCSHKhWwHs4LeGoNFIvAAjfYBC31srRQaP9cRSXz/wZ+jZMMEBofbCMCJLNkiFybR5LLrBSE+V0dr7VxOtc1leFC8lDI1DODOi2aV+v8lMwHgdeENsLY+CS53FKdVotOD0a4OAXYYyK3Won5tZLml+BqrQDPJXZlBU7WqsY9jC32NtkOKz+GmIaqK2pba7rMDmihmGERAPxjcOImGvUekM01DvS5jbhRZdhTpL6P0rDMJbJRJIPx3XiWMzCmtZ57mW8euJKRjOTizy7tWXOQBIzbO68k28I82rT9DgaPv+TLk6yxcmgc26U8eKqXhlBp2UXawEjevSQG0yjTlnqGmCJmlZi0OqjD62OCrwYqUj0/NaYfhm0+2HdYLlgrQr+7VI1j1pxVv4Sh0hfzmlRTd3pvDFeDGZCel8oalr1IatxYJJ2CLtFqsmt3+KmlXOxfToVEPF8tgUX9oNTM6hzkNnbaAddoLbsPQiSFt53ZgdztwszVJp8lnzRS7U8+CW7KnGRxOxUR/mtm2Lk5hZn94fTnyQ📢')">📋 کپی</button></div> @slipnet_decode</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@SlipNet_decode</span>
             <span class="datetime">2026-04-29 05:01:32</span>
         </div>
-        <div class="text">🔐New Shared Profileslipnet-enc://Aci1sDmW0ATfEg4jbBbsTKj0ihXzNCphAR63LqTr3XruCpUxgafYacIcpZCm70w8s9oj15tTpeEO1GSx/u59dpIyoXK80ULW4h/a2Eve0cBghLn5bpc+RrySBlx6KYjLCC8D77yskanTm904NL1WZJVvd5LVN01MSy58Z7lOQJCV4/oaMORMmsr7B0bdl7GUsidUUffj6tgD2puWGFUG7+NTqnJr3VSIQ0EQOKqRA1qG8wEaSR6jhQmtstFtZOa69XAGvJBHBI/m711hyl0Tvo4vZoZOiQ0+rbTx/4VTrio9Qxvg2da2JbFdr8qLith3fO5pyF2KENixHaw2GIolb6XHBAMCHc4JDiPjWphOjfpTeM8RJZobTise0xB4e3c7Wfhlc5ubyFeHYIjugFZea2XqQBwQtnSTWpAJCL+M+uqfTg+pIelsyFVsqPtNIX27ZAfqziwf1VOQ2HJrtKppsaS9EhZvHwsyeyKCBALqLufiy/Ia623p6WnNTKNW3t994Jzvz86Ujo5cgFIVRgvK//3EihyCadD38dM919hyGbR3rYRHBunUwnBdodBixmjx3sorSspnjI0pZpkqDqEonPfPaNPU📢@slipnet_decode</div>
+        <div class="text">🔐 New Shared Profile<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://Aci1sDmW0ATfEg4jbBbsTKj0ihXzNCphAR63LqTr3XruCpUxgafYacIcpZCm70w8s9oj15tTpeEO1GSx/u59dpIyoXK80ULW4h/a2Eve0cBghLn5bpc+RrySBlx6KYjLCC8D77yskanTm904NL1WZJVvd5LVN01MSy58Z7lOQJCV4/oaMORMmsr7B0bdl7GUsidUUffj6tgD2puWGFUG7+NTqnJr3VSIQ0EQOKqRA1qG8wEaSR6jhQmtstFtZOa69XAGvJBHBI/m711hyl0Tvo4vZoZOiQ0+rbTx/4VTrio9Qxvg2da2JbFdr8qLith3fO5pyF2KENixHaw2GIolb6XHBAMCHc4JDiPjWphOjfpTeM8RJZobTise0xB4e3c7Wfhlc5ubyFeHYIjugFZea2XqQBwQtnSTWpAJCL+M+uqfTg+pIelsyFVsqPtNIX27ZAfqziwf1VOQ2HJrtKppsaS9EhZvHwsyeyKCBALqLufiy/Ia623p6WnNTKNW3t994Jzvz86Ujo5cgFIVRgvK//3EihyCadD38dM919hyGbR3rYRHBunUwnBdodBixmjx3sorSspnjI0pZpkqDqEonPfPaNPU📢</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://Aci1sDmW0ATfEg4jbBbsTKj0ihXzNCphAR63LqTr3XruCpUxgafYacIcpZCm70w8s9oj15tTpeEO1GSx/u59dpIyoXK80ULW4h/a2Eve0cBghLn5bpc+RrySBlx6KYjLCC8D77yskanTm904NL1WZJVvd5LVN01MSy58Z7lOQJCV4/oaMORMmsr7B0bdl7GUsidUUffj6tgD2puWGFUG7+NTqnJr3VSIQ0EQOKqRA1qG8wEaSR6jhQmtstFtZOa69XAGvJBHBI/m711hyl0Tvo4vZoZOiQ0+rbTx/4VTrio9Qxvg2da2JbFdr8qLith3fO5pyF2KENixHaw2GIolb6XHBAMCHc4JDiPjWphOjfpTeM8RJZobTise0xB4e3c7Wfhlc5ubyFeHYIjugFZea2XqQBwQtnSTWpAJCL+M+uqfTg+pIelsyFVsqPtNIX27ZAfqziwf1VOQ2HJrtKppsaS9EhZvHwsyeyKCBALqLufiy/Ia623p6WnNTKNW3t994Jzvz86Ujo5cgFIVRgvK//3EihyCadD38dM919hyGbR3rYRHBunUwnBdodBixmjx3sorSspnjI0pZpkqDqEonPfPaNPU📢')">📋 کپی</button></div> @slipnet_decode</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@SlipNet_decode</span>
             <span class="datetime">2026-04-29 05:12:50</span>
         </div>
-        <div class="text">🔐New Shared Profileslipnet-enc://AaEEb1SItZBVgi0iQLc5jGfcdkex94ycC21pase21mb0VklV9H3EqLr0SJnec0Pn29IgV0UNX4za5CAJPBa0GA/mJOeYTWRb4jAx/a/3a5N5gajJc7SYzVx/XIOiuLO8JoAjO2+xTUEbpN8QbZ3z9nso5s27Tyt4dnj/fpKEor2OnG9zcUZpbQf5WTbCLQ0qBXjh1TSg89U1W63dLyZTwWnWMH1jM3fREZoQYf7JI5dN4m3ZqAzezC41VFLX6Xvpf0XanflfaX1jg1nOO7AAyvSGctUFVAlqN8ELIvPisXpCEr9UouWrWB97jSiK6zE7QxVTqkFvuDW/Kb2wBc9B+2cAOSWt3YuQpXulGLZK34FxLiLjesQo2mgMZ3WWRjJvwAwaZ4/Z9UOSAcWEieEgkpVsxPl2jZY8mD2ZxlvS7SB5tKyisPB/5d2g6uOIAb+h2A10ZcuXgCYK1yku8zjpgg+lpNDNk7Lc32qV6lVZ+3gVm+0lo4O0Aju50HjWJf/HCEFpt/UU7++77960RfuasxH6J26bawTNx3Ny7SUGaagYmzODV/R2E2W4EEF1LnMTGKZU8FL9📢@slipnet_decode</div>
+        <div class="text">🔐 New Shared Profile<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AaEEb1SItZBVgi0iQLc5jGfcdkex94ycC21pase21mb0VklV9H3EqLr0SJnec0Pn29IgV0UNX4za5CAJPBa0GA/mJOeYTWRb4jAx/a/3a5N5gajJc7SYzVx/XIOiuLO8JoAjO2+xTUEbpN8QbZ3z9nso5s27Tyt4dnj/fpKEor2OnG9zcUZpbQf5WTbCLQ0qBXjh1TSg89U1W63dLyZTwWnWMH1jM3fREZoQYf7JI5dN4m3ZqAzezC41VFLX6Xvpf0XanflfaX1jg1nOO7AAyvSGctUFVAlqN8ELIvPisXpCEr9UouWrWB97jSiK6zE7QxVTqkFvuDW/Kb2wBc9B+2cAOSWt3YuQpXulGLZK34FxLiLjesQo2mgMZ3WWRjJvwAwaZ4/Z9UOSAcWEieEgkpVsxPl2jZY8mD2ZxlvS7SB5tKyisPB/5d2g6uOIAb+h2A10ZcuXgCYK1yku8zjpgg+lpNDNk7Lc32qV6lVZ+3gVm+0lo4O0Aju50HjWJf/HCEFpt/UU7++77960RfuasxH6J26bawTNx3Ny7SUGaagYmzODV/R2E2W4EEF1LnMTGKZU8FL9📢</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AaEEb1SItZBVgi0iQLc5jGfcdkex94ycC21pase21mb0VklV9H3EqLr0SJnec0Pn29IgV0UNX4za5CAJPBa0GA/mJOeYTWRb4jAx/a/3a5N5gajJc7SYzVx/XIOiuLO8JoAjO2+xTUEbpN8QbZ3z9nso5s27Tyt4dnj/fpKEor2OnG9zcUZpbQf5WTbCLQ0qBXjh1TSg89U1W63dLyZTwWnWMH1jM3fREZoQYf7JI5dN4m3ZqAzezC41VFLX6Xvpf0XanflfaX1jg1nOO7AAyvSGctUFVAlqN8ELIvPisXpCEr9UouWrWB97jSiK6zE7QxVTqkFvuDW/Kb2wBc9B+2cAOSWt3YuQpXulGLZK34FxLiLjesQo2mgMZ3WWRjJvwAwaZ4/Z9UOSAcWEieEgkpVsxPl2jZY8mD2ZxlvS7SB5tKyisPB/5d2g6uOIAb+h2A10ZcuXgCYK1yku8zjpgg+lpNDNk7Lc32qV6lVZ+3gVm+0lo4O0Aju50HjWJf/HCEFpt/UU7++77960RfuasxH6J26bawTNx3Ny7SUGaagYmzODV/R2E2W4EEF1LnMTGKZU8FL9📢')">📋 کپی</button></div> @slipnet_decode</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
+            <span class="channel">@SlipNet_decode</span>
+            <span class="datetime">2026-04-29 06:04:54</span>
+        </div>
+        <div class="text">🔐 New Shared Profile<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AfvRw6ekr3RP4+x8x2uNkP+BRfCrkYmcrPjO+FCgDzpjdPXSmWm5a/wvt8xpB5ifKwRVGujjyioYunfuGbeWRXeHdWa5tTrU82nzT7Zi5TkOYp0SFRiU999baBcHR60W9AVlPHOnO46paYdbRb0yjchva8bysFTHLAbG7qDlMIBaKkTZ7R+Fn4rgiu3ydvaZfXaDt9P2AxhkTrtmaFRaS+uWebHgq1HyLL5QRc7RAD4TlE3Wuj4VQtr1Xpgab1NspPhsv1WlyDb29r4vVgipz7V8WNk9iBVTNAn+TD0JuzPYD69PvdR3q8gXV2P1MFQlwJ3GEELb34tgQDTJ7jX1mRTAJY5q9OO4pU4C2nOnb5B9qG0kXsXyMsOZZt/QcaJ58LptsgYBHdibTI/K4Slqx0HOttIqHSHOJZSW0r/1k84i40ASPx2W+j5WjWu51KcfAirS9OySQf8lD0Cvq4a4nyWqv47tGyfHNqtm5jjfbENPMI8mFI0+Yf3nbUs4NOAB1uzUx6Xre9wlg8VtBpek📢</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AfvRw6ekr3RP4+x8x2uNkP+BRfCrkYmcrPjO+FCgDzpjdPXSmWm5a/wvt8xpB5ifKwRVGujjyioYunfuGbeWRXeHdWa5tTrU82nzT7Zi5TkOYp0SFRiU999baBcHR60W9AVlPHOnO46paYdbRb0yjchva8bysFTHLAbG7qDlMIBaKkTZ7R+Fn4rgiu3ydvaZfXaDt9P2AxhkTrtmaFRaS+uWebHgq1HyLL5QRc7RAD4TlE3Wuj4VQtr1Xpgab1NspPhsv1WlyDb29r4vVgipz7V8WNk9iBVTNAn+TD0JuzPYD69PvdR3q8gXV2P1MFQlwJ3GEELb34tgQDTJ7jX1mRTAJY5q9OO4pU4C2nOnb5B9qG0kXsXyMsOZZt/QcaJ58LptsgYBHdibTI/K4Slqx0HOttIqHSHOJZSW0r/1k84i40ASPx2W+j5WjWu51KcfAirS9OySQf8lD0Cvq4a4nyWqv47tGyfHNqtm5jjfbENPMI8mFI0+Yf3nbUs4NOAB1uzUx6Xre9wlg8VtBpek📢')">📋 کپی</button></div> @slipnet_decode</div>
+    </div>
+
+    <div class="post">
+        <div class="post-header">
             <span class="channel">@blackRay</span>
             <span class="datetime">2026-04-15 16:53:28</span>
         </div>
-        <div class="text">Password:@blackRay#موقتایرانسل تست کنیدمنطقه ای هست اگه اتصالتون پایدار هست تست کنید ، صبرکنید تو تلگرام ، پینگ نمیده❌.ریکشن یادتون نره🫀✉️@blackRay</div>
+        <div class="text">Password: @blackRay#موقت ایرانسل تست کنیدمنطقه ای هست اگه اتصالتون پایدار هست تست کنید ، صبرکنید تو تلگرام ، پینگ نمیده❌.ریکشن یادتون نره 🫀✉️ @blackRay</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@blackRay</span>
             <span class="datetime">2026-04-15 16:53:58</span>
         </div>
@@ -264,85 +329,85 @@
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@blackRay</span>
             <span class="datetime">2026-04-15 21:29:42</span>
         </div>
-        <div class="text">Password:@blackRay#موقتایرانسل ، پیشگامان تست کنیدمنطقه ای هستاگه اتصالتون پایدار هست تست کنید ، صبرکنید تو تلگرام ، پینگ نمیده❌.ریکشن یادتون نره🫀✉️@blackRay</div>
+        <div class="text">Password: @blackRay#موقت ایرانسل ، پیشگامان تست کنیدمنطقه ای هست اگه اتصالتون پایدار هست تست کنید ، صبرکنید تو تلگرام ، پینگ نمیده❌.ریکشن یادتون نره 🫀✉️ @blackRay</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@blackRay</span>
             <span class="datetime">2026-04-15 22:04:02</span>
         </div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@blackRay</span>
             <span class="datetime">2026-04-15 22:31:12</span>
         </div>
-        <div class="text">@blackRay -🌱.npvt</div>
+        <div class="text">@blackRay - 🌱.npvt</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@SparrK_VPN</span>
             <span class="datetime">2026-04-27 10:08:46</span>
         </div>
-        <div class="text">یه توضیح کوچیک هم بدم.  هر جا دیدین گرونتره ، فکر نکنید داره گرون فروشی میکنه. قیمت منابع فرق میکنه و روش ها متفاوت هست. البته یه تعدادی هم سو استفاده میکنن کلا توی هر شرایطی .در حال حاظر چون خیلی ها دنبال اینستا گردی و یوتیوب نیستن و صرفا دنبال اینن اخبار رو پیگیری کنن  همون منابع ارزونم کارشون رو راه میندازه .</div>
+        <div class="text">یه توضیح کوچیک هم بدم.  هر جا دیدین گرونتره ، فکر نکنید داره گرون فروشی میکنه. قیمت منابع فرق میکنه و روش ها متفاوت هست. البته یه تعدادی هم سو استفاده میکنن کلا توی هر شرایطی . در حال حاظر چون خیلی ها دنبال اینستا گردی و یوتیوب نیستن و صرفا دنبال اینن اخبار رو پیگیری کنن  همون منابع ارزونم کارشون رو راه میندازه .</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@SparrK_VPN</span>
             <span class="datetime">2026-04-27 10:14:37</span>
         </div>
-        <div class="text">عزیزان سریع نیایید قیمت بپرسید. صرفا یک گلایه و تلنگر بود واسه تعدادی از دوستان که خیلی قیمت های زیادی روی سرورهای بی کیفیتشون گذاشته بودن. امیدوارم سریع درست کنن قیمتشون رو😃</div>
+        <div class="text">عزیزان سریع نیایید قیمت بپرسید. صرفا یک گلایه و تلنگر بود واسه تعدادی از دوستان که خیلی قیمت های زیادی روی سرورهای بی کیفیتشون گذاشته بودن. امیدوارم سریع درست کنن قیمتشون رو 😃</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@SparrK_VPN</span>
             <span class="datetime">2026-04-27 10:33:56</span>
         </div>
-        <div class="text">MatserDNS⚡منقضی❌domain :s.n4d3r.orgEncryption key :71afb1d2108b010e67d1176b915be6baEncryption method : xorResolver list :80.191.156.134217.219.93.55188.213.65.545.160.105.6176.101.32.90213.207.198.254217.219.120.822.185.144.662.188.21.13091.212.252.4846.100.134.2180.210.44.1875.202.134.11737.75.244.52188.213.65.5494.183.95.20895.38.102.94109.230.83.155185.126.5.4177.238.123.238178.252.170.222185.136.180.22193.118.114.8862.60.196.1187.107.166.15093.118.183.285.185.159.7679.175.172.9894.184.10.13394.184.10.131185.191.77.5078.157.57.872.188.21.13085.185.1.10185.141.168.8﻿JOIN :@Sparrk_VPN✅</div>
+        <div class="text">MatserDNS ⚡منقضی ❌domain :  s.n4d3r.orgEncryption key :71afb1d2108b010e67d1176b915be6baEncryption method : xorResolver list : 80.191.156.134217.219.93.55188.213.65.545.160.105.6176.101.32.90213.207.198.254217.219.120.822.185.144.662.188.21.13091.212.252.4846.100.134.2180.210.44.1875.202.134.11737.75.244.52188.213.65.5494.183.95.20895.38.102.94109.230.83.155185.126.5.4177.238.123.238178.252.170.222185.136.180.22193.118.114.8862.60.196.1187.107.166.15093.118.183.285.185.159.7679.175.172.9894.184.10.13394.184.10.131185.191.77.5078.157.57.872.188.21.13085.185.1.10185.141.168.8﻿JOIN : @Sparrk_VPN ✅</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@SparrK_VPN</span>
             <span class="datetime">2026-04-27 16:54:16</span>
         </div>
-        <div class="text">MatserDNS⚡#Rahgozar🦋Domain:a.owel.myENCRYPTION_KEY:aaaaaaa-@rahgozar94725_ip-aaaaaaEncryption Method : XOR80.191.156.134217.219.93.55188.213.65.545.160.105.6176.101.32.90213.207.198.254217.219.120.822.185.144.662.188.21.13091.212.252.4846.100.134.2180.210.44.1875.202.134.11737.75.244.52188.213.65.5494.183.95.20895.38.102.94109.230.83.155185.126.5.4177.238.123.238178.252.170.222185.136.180.22193.118.114.8862.60.196.1187.107.166.15093.118.183.285.185.159.7679.175.172.9894.184.10.13394.184.10.131185.191.77.5078.157.57.872.188.21.13085.185.1.10185.141.168.894.184.10.13289.40.78.922.144.198.24794.184.10.13194.184.10.1355.236.104.215193.186.32.3285.185.163.478.111.11.1287.107.9.233217.219.34.66185.137.25.21085.185.1.10178.252.129.1082.144.6.7531.7.78.205185.121.129.6680.75.14.102193.186.32.14187.107.9.173185.224.179.1762.189.101.0185.14.161.3687.107.9.170185.208.183.2978.111.11.1146.100.132.34217.218.249.24081.16.124.73109.230.223.7510.104.33.246217.219.66.893.118.123.982.99.247.452.186.117.9310.104.209.247185.117.139.842.186.118.25510.104.209.715.202.37.5578.38.26.13293.118.148.21493.118.125.582.99.230.1705.190.8.11380.191.60.3693.118.128.382.180.31.1745.22.203.10278.38.0.82JOIN :@Sparrk_VPN✅</div>
+        <div class="text">MatserDNS ⚡#Rahgozar 🦋Domain: a.owel.myENCRYPTION_KEY: aaaaaaa-@rahgozar94725_ip-aaaaaa Encryption Method : XOR80.191.156.134217.219.93.55188.213.65.545.160.105.6176.101.32.90213.207.198.254217.219.120.822.185.144.662.188.21.13091.212.252.4846.100.134.2180.210.44.1875.202.134.11737.75.244.52188.213.65.5494.183.95.20895.38.102.94109.230.83.155185.126.5.4177.238.123.238178.252.170.222185.136.180.22193.118.114.8862.60.196.1187.107.166.15093.118.183.285.185.159.7679.175.172.9894.184.10.13394.184.10.131185.191.77.5078.157.57.872.188.21.13085.185.1.10185.141.168.894.184.10.13289.40.78.922.144.198.24794.184.10.13194.184.10.1355.236.104.215193.186.32.3285.185.163.478.111.11.1287.107.9.233217.219.34.66185.137.25.21085.185.1.10178.252.129.1082.144.6.7531.7.78.205185.121.129.6680.75.14.102193.186.32.14187.107.9.173185.224.179.1762.189.101.0185.14.161.3687.107.9.170185.208.183.2978.111.11.1146.100.132.34217.218.249.24081.16.124.73109.230.223.7510.104.33.246217.219.66.893.118.123.982.99.247.452.186.117.9310.104.209.247185.117.139.842.186.118.25510.104.209.715.202.37.5578.38.26.13293.118.148.21493.118.125.582.99.230.1705.190.8.11380.191.60.3693.118.128.382.180.31.1745.22.203.10278.38.0.82JOIN : @Sparrk_VPN ✅</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@SparrK_VPN</span>
             <span class="datetime">2026-04-27 17:49:42</span>
         </div>
-        <div class="text">کانفیگ SlipNet🕊اختصاصی کانالکاملا رایگانمنقضی❌⚠️تنظیمات Slipnet حالت پیش فرضمخصوص  نسخه 2.5.2 نهاییNoizDNS+SSH TCP🇫🇮slipnet-enc://AYMOFr0grLV54dCPvA3L2Q9tjQZJAsI+iSoacsJYi8qEPyfXwfjsrWSUVwkl1BeQEbaT0PoBq39JzGFaDPFfWDmrM5d/UhOtH6JJPdnPGrtU1Idn4BOb8jD7fKDQaeOmbcPfHCsMOLXQgD/i59JhR3UKqrnT4aj/tohxKEzuWWt9c/n+2RTuw3gDYhRa0qJmhfI2lQw9WZt/b4rZGvVZIt7okIJgzt/zEa09gSQS62/3fk6p4VFdCUJ8YGKx3i1nXwEOeWcQqGsNf6ro8Pnl7R/8Exl5Fls/rkjSWKoEu4heCqUr+CR44hyxslPZZ0O5UgJ06TrfQY7xRABiHZTA6kpS9+UfyF/U2PFlScs/4Erb6ylGRRDlVR3m3TwS2qHHAUCf+YJo1gREIb7Zsu/m7zppwALCYd2WN0CxcvGSh5XFu9jZe+srsBYkVgx2vxcdJVnBT/lbJumWLAlOSXG8O0qnhBsZIFyQI8XchxYrrfV6GpIZhD79WBQjIJ77e/bN4pRAsIxdYLGkESNzhQ6PgrufLp/NkRTuMK17pSQV/vvUK0vSUiLL8isBf7m31u5jhkQbUCpYxh57eMxmymBrgtuPvQbeUQEbAURDJGdx97IfdPeWDRx8lJsncazkJ2I6D70uAg1hD7MZ6v+5jQ==VPN MTU : 1232 ~ 1280✅JOIN :@Sparrk_VPN✅</div>
+        <div class="text">کانفیگ SlipNet 🕊 اختصاصی کانالکاملا رایگانمنقضی ❌⚠️تنظیمات Slipnet حالت پیش فرض مخصوص  نسخه 2.5.2 نهاییNoizDNS+SSH TCP 🇫🇮<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AYMOFr0grLV54dCPvA3L2Q9tjQZJAsI+iSoacsJYi8qEPyfXwfjsrWSUVwkl1BeQEbaT0PoBq39JzGFaDPFfWDmrM5d/UhOtH6JJPdnPGrtU1Idn4BOb8jD7fKDQaeOmbcPfHCsMOLXQgD/i59JhR3UKqrnT4aj/tohxKEzuWWt9c/n+2RTuw3gDYhRa0qJmhfI2lQw9WZt/b4rZGvVZIt7okIJgzt/zEa09gSQS62/3fk6p4VFdCUJ8YGKx3i1nXwEOeWcQqGsNf6ro8Pnl7R/8Exl5Fls/rkjSWKoEu4heCqUr+CR44hyxslPZZ0O5UgJ06TrfQY7xRABiHZTA6kpS9+UfyF/U2PFlScs/4Erb6ylGRRDlVR3m3TwS2qHHAUCf+YJo1gREIb7Zsu/m7zppwALCYd2WN0CxcvGSh5XFu9jZe+srsBYkVgx2vxcdJVnBT/lbJumWLAlOSXG8O0qnhBsZIFyQI8XchxYrrfV6GpIZhD79WBQjIJ77e/bN4pRAsIxdYLGkESNzhQ6PgrufLp/NkRTuMK17pSQV/vvUK0vSUiLL8isBf7m31u5jhkQbUCpYxh57eMxmymBrgtuPvQbeUQEbAURDJGdx97IfdPeWDRx8lJsncazkJ2I6D70uAg1hD7MZ6v+5jQ==VPN</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AYMOFr0grLV54dCPvA3L2Q9tjQZJAsI+iSoacsJYi8qEPyfXwfjsrWSUVwkl1BeQEbaT0PoBq39JzGFaDPFfWDmrM5d/UhOtH6JJPdnPGrtU1Idn4BOb8jD7fKDQaeOmbcPfHCsMOLXQgD/i59JhR3UKqrnT4aj/tohxKEzuWWt9c/n+2RTuw3gDYhRa0qJmhfI2lQw9WZt/b4rZGvVZIt7okIJgzt/zEa09gSQS62/3fk6p4VFdCUJ8YGKx3i1nXwEOeWcQqGsNf6ro8Pnl7R/8Exl5Fls/rkjSWKoEu4heCqUr+CR44hyxslPZZ0O5UgJ06TrfQY7xRABiHZTA6kpS9+UfyF/U2PFlScs/4Erb6ylGRRDlVR3m3TwS2qHHAUCf+YJo1gREIb7Zsu/m7zppwALCYd2WN0CxcvGSh5XFu9jZe+srsBYkVgx2vxcdJVnBT/lbJumWLAlOSXG8O0qnhBsZIFyQI8XchxYrrfV6GpIZhD79WBQjIJ77e/bN4pRAsIxdYLGkESNzhQ6PgrufLp/NkRTuMK17pSQV/vvUK0vSUiLL8isBf7m31u5jhkQbUCpYxh57eMxmymBrgtuPvQbeUQEbAURDJGdx97IfdPeWDRx8lJsncazkJ2I6D70uAg1hD7MZ6v+5jQ==VPN')">📋 کپی</button></div> MTU : 1232 ~ 1280 ✅JOIN : @Sparrk_VPN ✅</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@SlipNet_app</span>
             <span class="datetime">2026-04-18 11:53:41</span>
         </div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@SlipNet_app</span>
             <span class="datetime">2026-04-18 17:03:43</span>
         </div>
-        <div class="text">SlipNet is free, source-available, and built to fight internet censorship. No ads, no data collection, no subscriptions. Your donation helps keep this tool free and improving for everyone who needs it.​اسلیپ‌نت (SlipNet) کاملاً رایگان است، کدهای آن در دسترس قرار دارد و برای مقابله با سانسور اینترنت ساخته شده است. نه تبلیغاتی در کار است، نه اطلاعاتی از شما جمع‌آوری می‌شود و نه نیازی به خرید اشتراک دارید.با این حال، ادامه توسعه و بقای اسلیپ‌نت تنها به حمایت‌های شما وابسته است. بدون کمک‌های مالی شما، توسعه این پروژه متوقف خواهد شد.​🔒Monero (XMR):48wa9asF4AdZCq8KvPqBmqN3s98XFQ2MG7pL8MY6hAc6ZXBd8D61LArebdmAwCk5jBBbR2BuiHkSraEYFhx5AdDqLxDB4GU​🌐Crypto (BEP20 / ERC20 / Arbitrum):0xd4140058389572d50dc8716e768e687c050dd5c9⚡️TRX (Tron):TGgmKhFLQN5bJT8MpU58nU45F6LMs4YdzJحمایت‌های شما صرف تحقیق، توسعه و به‌روزرسانی فنی پروژه‌ای می‌شود که هدفش تنها یک چیز است: اتصال پایدار و آزاد.🕊@slipnet_app</div>
+        <div class="text">SlipNet is free, source-available, and built to fight internet censorship. No ads, no data collection, no subscriptions. Your donation helps keep this tool free and improving for everyone who needs it.​اسلیپ‌نت (SlipNet) کاملاً رایگان است، کدهای آن در دسترس قرار دارد و برای مقابله با سانسور اینترنت ساخته شده است. نه تبلیغاتی در کار است، نه اطلاعاتی از شما جمع‌آوری می‌شود و نه نیازی به خرید اشتراک دارید.با این حال، ادامه توسعه و بقای اسلیپ‌نت تنها به حمایت‌های شما وابسته است. بدون کمک‌های مالی شما، توسعه این پروژه متوقف خواهد شد.​🔒 Monero (XMR):48wa9asF4AdZCq8KvPqBmqN3s98XFQ2MG7pL8MY6hAc6ZXBd8D61LArebdmAwCk5jBBbR2BuiHkSraEYFhx5AdDqLxDB4GU​🌐 Crypto (BEP20 / ERC20 / Arbitrum):0xd4140058389572d50dc8716e768e687c050dd5c9⚡️TRX (Tron):TGgmKhFLQN5bJT8MpU58nU45F6LMs4YdzJحمایت‌های شما صرف تحقیق، توسعه و به‌روزرسانی فنی پروژه‌ای می‌شود که هدفش تنها یک چیز است: اتصال پایدار و آزاد.🕊 @slipnet_app</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@SlipNet_app</span>
             <span class="datetime">2026-04-26 16:01:53</span>
         </div>
@@ -350,7 +415,7 @@
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@SlipNet_app</span>
             <span class="datetime">2026-04-26 16:01:53</span>
         </div>
@@ -358,23 +423,23 @@
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@SlipNet_app</span>
             <span class="datetime">2026-04-26 18:06:23</span>
         </div>
-        <div class="text">SlipNet v2.5.3 — Key ChangesDNS Scanner Updates: Added TCP and "Both" modes to test and auto-recommend the best transport (UDP, TCP, or Mixed) to bypass ISP blocking. UI Improvements.Faster Android Connections: TCP/DoT resolvers are now pre-tested (8s timeout) before connecting, dropping dead ones to prevent connection stalls.Tunnel Chaining: SnowflakeBridge and DohBridge now support upstream SOCKS5, allowing you to stack layers (e.g., DoH-over-Tor).Encrypted Exports: Added "Export All (Encrypted)" to the main menu.Optimizations & Docs: Reduced the Tor binary size (up to 29% smaller on armv7) and added official English and Persian user guides to the repository.___________________________SlipNet v2.5.3 — تغییرات مهمبروزرسانی‌های اسکنر DNS: اضافه شدن حالت‌های TCP و "Both" (هر دو) برای تست و پیشنهاد خودکار بهترین پروتکل انتقال (UDP، TCP یا ترکیبی) جهت دور زدن محدودیت‌های ارائه‌دهندگان اینترنت.اتصال سریع‌تر در اندروید: بررسی پیش‌نیاز resolverهای TCP/DoT (با مهلت ۸ ثانیه) قبل از اتصال، تا با حذف موارد غیرفعال از توقف در روند اتصال جلوگیری شود.زنجیره‌سازی تونل‌ها (Tunnel Chaining): پشتیبانی پل‌های SnowflakeBridge و DohBridge از SOCKS5 بالادستی، که اجازه می‌دهد لایه‌ها را روی هم قرار دهید (مانند DoH-over-Tor).خروجی رمزنگاری‌شده: اضافه شدن گزینه "Export All (Encrypted)" به منوی اصلی.بهینه‌سازی و مستندات: کاهش حجم فایل باینری Tor (تا ۲۹٪ در armv7) و اضافه شدن راهنمای رسمی کاربران به زبان‌های انگلیسی و فارسی در مخزن برنامه.GitHub:https://github.com/anonvector/SlipNet/نسخه جدید CLI در GitHub</div>
+        <div class="text">SlipNet v2.5.3 — Key ChangesDNS Scanner Updates: Added TCP and "Both" modes to test and auto-recommend the best transport (UDP, TCP, or Mixed) to bypass ISP blocking. UI Improvements.Faster Android Connections: TCP/DoT resolvers are now pre-tested (8s timeout) before connecting, dropping dead ones to prevent connection stalls.Tunnel Chaining: SnowflakeBridge and DohBridge now support upstream SOCKS5, allowing you to stack layers (e.g., DoH-over-Tor).Encrypted Exports: Added "Export All (Encrypted)" to the main menu.Optimizations &amp; Docs: Reduced the Tor binary size (up to 29% smaller on armv7) and added official English and Persian user guides to the repository.___________________________SlipNet v2.5.3 — تغییرات مهمبروزرسانی‌های اسکنر DNS: اضافه شدن حالت‌های TCP و "Both" (هر دو) برای تست و پیشنهاد خودکار بهترین پروتکل انتقال (UDP، TCP یا ترکیبی) جهت دور زدن محدودیت‌های ارائه‌دهندگان اینترنت.اتصال سریع‌تر در اندروید: بررسی پیش‌نیاز resolverهای TCP/DoT (با مهلت ۸ ثانیه) قبل از اتصال، تا با حذف موارد غیرفعال از توقف در روند اتصال جلوگیری شود.زنجیره‌سازی تونل‌ها (Tunnel Chaining): پشتیبانی پل‌های SnowflakeBridge و DohBridge از SOCKS5 بالادستی، که اجازه می‌دهد لایه‌ها را روی هم قرار دهید (مانند DoH-over-Tor).خروجی رمزنگاری‌شده: اضافه شدن گزینه "Export All (Encrypted)" به منوی اصلی.بهینه‌سازی و مستندات: کاهش حجم فایل باینری Tor (تا ۲۹٪ در armv7) و اضافه شدن راهنمای رسمی کاربران به زبان‌های انگلیسی و فارسی در مخزن برنامه.GitHub: https://github.com/anonvector/SlipNet/نسخه جدید CLI در GitHub</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@VConfing</span>
             <span class="datetime">2026-04-27 01:38:45</span>
         </div>
-        <div class="text">https://t.me/socks?server=78.39.9.237&port=2080وصله</div>
+        <div class="text">https://t.me/socks?server=78.39.9.237&amp;port=2080وصله</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@VConfing</span>
             <span class="datetime">2026-04-27 11:44:07</span>
         </div>
@@ -382,15 +447,15 @@
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@VConfing</span>
             <span class="datetime">2026-04-27 11:58:23</span>
         </div>
-        <div class="text">SlipNetبزنید سه نقطه بالا بزنید رو import Profiles و کانفیگ زیر رو وارد کنیدslipnet-enc://ASFKV6R3skZTNywVC+USRST2ugkJmkdEWn4zCL8BQGGP3AwZ8tabjdh/aMr0wTH9DtZjph+p6DQsvehCbH28UT+88CUdyYIXz996oGP4Y18B7uCU88gSgikp1QvdY76SeRlFce5JkPzZpd072Q1P0HMJ0A+MkFlUZRZj2nJg0fReRjpOlv5J0k2vIvfF8uxT070APuc8VJ5wCetKoLadt1RGZGF2dbeMpGDZLJQsuubk6pj3agrAbytl/iKhzCwMEHtwfWqDvuenmeuou+sN4XU/Y/Ez/cTFaIX9fEk62WgLx4iAyTC32M1fYo39cE9t2w8O4qwg0GnjEFSi1UDT7710En+irYwcTKKUVfEKcV8JRM2gXEf0Tfc1l8yqSmHAcrR0uUYa77IgxehSvhWfOFJQ1BfAUNoUtTh/JSjrWOo0qm3Jt8XMHe7pCQyzWyiq5CoiZnvbwrkMAlho5CG3EAKlgvHyMu+whyv4Mgohnf5GLxIzh8udjeAsm0pQsWt4HliGUfn5soQtWEiCwZ1I0sDpSl2ONE3hbhC7kFo0g6SBcPkqOfXbb6vVsZ3IEMIbo/GfpLlJ6zr8VFNT87WxZYX/NJ+Ao/d/xIFO+cG2sZIJ9lnh/kGLEO5M1jMS1M9IwdFtwWiC81LZ2nXjVVvXn0fEUXNTMCu0vspG4UgtLODIMDUkXdTNrOje0qEAUXhzwCY2sxVMW91aRJl6Yc4qUkx6gaCig3D72dljwmvg/3R34gyB3ZsbtVRSy8StIvVWLlodwO3Zof3aEXf8EwlZ2llOErNk2xSoEcTLQqZNdd71iKMnHejmhwQIQUQxKqrVHgMdlX1TAgVu5Wn6U0soctNTTY0iDeCHeln7QLB70RNcgdss6DH7GMCs1N1Neg==به کانفیگ بالا وصل شید و بعد به پروکسی پایین داخل تلگرام وصل شیدترکیب با پروکسیhttps://t.me/socks?server=127.0.0.1&port=1080تنظیمات رو از داخل SlipNet وارد کنید👇Port : 1080Proxy-only mode : (on)HTTP proxy :(on)</div>
+        <div class="text">SlipNet بزنید سه نقطه بالا بزنید رو import Profiles و کانفیگ زیر رو وارد کنید<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://ASFKV6R3skZTNywVC+USRST2ugkJmkdEWn4zCL8BQGGP3AwZ8tabjdh/aMr0wTH9DtZjph+p6DQsvehCbH28UT+88CUdyYIXz996oGP4Y18B7uCU88gSgikp1QvdY76SeRlFce5JkPzZpd072Q1P0HMJ0A+MkFlUZRZj2nJg0fReRjpOlv5J0k2vIvfF8uxT070APuc8VJ5wCetKoLadt1RGZGF2dbeMpGDZLJQsuubk6pj3agrAbytl/iKhzCwMEHtwfWqDvuenmeuou+sN4XU/Y/Ez/cTFaIX9fEk62WgLx4iAyTC32M1fYo39cE9t2w8O4qwg0GnjEFSi1UDT7710En+irYwcTKKUVfEKcV8JRM2gXEf0Tfc1l8yqSmHAcrR0uUYa77IgxehSvhWfOFJQ1BfAUNoUtTh/JSjrWOo0qm3Jt8XMHe7pCQyzWyiq5CoiZnvbwrkMAlho5CG3EAKlgvHyMu+whyv4Mgohnf5GLxIzh8udjeAsm0pQsWt4HliGUfn5soQtWEiCwZ1I0sDpSl2ONE3hbhC7kFo0g6SBcPkqOfXbb6vVsZ3IEMIbo/GfpLlJ6zr8VFNT87WxZYX/NJ+Ao/d/xIFO+cG2sZIJ9lnh/kGLEO5M1jMS1M9IwdFtwWiC81LZ2nXjVVvXn0fEUXNTMCu0vspG4UgtLODIMDUkXdTNrOje0qEAUXhzwCY2sxVMW91aRJl6Yc4qUkx6gaCig3D72dljwmvg/3R34gyB3ZsbtVRSy8StIvVWLlodwO3Zof3aEXf8EwlZ2llOErNk2xSoEcTLQqZNdd71iKMnHejmhwQIQUQxKqrVHgMdlX1TAgVu5Wn6U0soctNTTY0iDeCHeln7QLB70RNcgdss6DH7GMCs1N1Neg==به</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://ASFKV6R3skZTNywVC+USRST2ugkJmkdEWn4zCL8BQGGP3AwZ8tabjdh/aMr0wTH9DtZjph+p6DQsvehCbH28UT+88CUdyYIXz996oGP4Y18B7uCU88gSgikp1QvdY76SeRlFce5JkPzZpd072Q1P0HMJ0A+MkFlUZRZj2nJg0fReRjpOlv5J0k2vIvfF8uxT070APuc8VJ5wCetKoLadt1RGZGF2dbeMpGDZLJQsuubk6pj3agrAbytl/iKhzCwMEHtwfWqDvuenmeuou+sN4XU/Y/Ez/cTFaIX9fEk62WgLx4iAyTC32M1fYo39cE9t2w8O4qwg0GnjEFSi1UDT7710En+irYwcTKKUVfEKcV8JRM2gXEf0Tfc1l8yqSmHAcrR0uUYa77IgxehSvhWfOFJQ1BfAUNoUtTh/JSjrWOo0qm3Jt8XMHe7pCQyzWyiq5CoiZnvbwrkMAlho5CG3EAKlgvHyMu+whyv4Mgohnf5GLxIzh8udjeAsm0pQsWt4HliGUfn5soQtWEiCwZ1I0sDpSl2ONE3hbhC7kFo0g6SBcPkqOfXbb6vVsZ3IEMIbo/GfpLlJ6zr8VFNT87WxZYX/NJ+Ao/d/xIFO+cG2sZIJ9lnh/kGLEO5M1jMS1M9IwdFtwWiC81LZ2nXjVVvXn0fEUXNTMCu0vspG4UgtLODIMDUkXdTNrOje0qEAUXhzwCY2sxVMW91aRJl6Yc4qUkx6gaCig3D72dljwmvg/3R34gyB3ZsbtVRSy8StIvVWLlodwO3Zof3aEXf8EwlZ2llOErNk2xSoEcTLQqZNdd71iKMnHejmhwQIQUQxKqrVHgMdlX1TAgVu5Wn6U0soctNTTY0iDeCHeln7QLB70RNcgdss6DH7GMCs1N1Neg==به')">📋 کپی</button></div> کانفیگ بالا وصل شید و بعد به پروکسی پایین داخل تلگرام وصل شیدترکیب با پروکسی https://t.me/socks?server=127.0.0.1&amp;port=1080تنظیمات رو از داخل SlipNet وارد کنید👇Port : 1080Proxy-only mode : (on)HTTP proxy :(on)</div>
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@VConfing</span>
             <span class="datetime">2026-04-27 12:08:15</span>
         </div>
@@ -398,16 +463,26 @@
     </div>
 
     <div class="post">
-        <div>
+        <div class="post-header">
             <span class="channel">@VConfing</span>
             <span class="datetime">2026-04-27 15:33:54</span>
         </div>
         <div class="text">🔹آپدیت : گویا اینترنت گیگی 390 که همراه اول داره میفروشه، رومینگ عراقه.</div>
     </div>
 
-    <footer>
-        آخرین به‌روزرسانی: 2026-04-29 11:32:36 | تصاویر به صورت محلی در مخزن ذخیره شده‌اند.
-    </footer>
+    <div id="toast" class="toast">✅ کپی شد!</div>
+    <footer>آخرین به‌روزرسانی: 2026-04-29 11:45:12 | تصاویر به صورت محلی در مخزن ذخیره شده‌اند.</footer>
 </div>
+<script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            let toast = document.getElementById('toast');
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; }, 1500);
+        }).catch(() => {
+            alert('کپی دستی: ' + text);
+        });
+    }
+</script>
 </body>
 </html>
