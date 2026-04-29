@@ -1,0 +1,41 @@
+name: Scrape Telegram Posts & Images
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'   # هر 30 دقیقه یکبار (اختیاری، می‌توانید حذف کنید)
+  workflow_dispatch:          # اجازه اجرای دستی از طریق دکمه "Run workflow"
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Run scraper (download images & generate HTML)
+        run: python scrape_telegram_with_images.py
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html images/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update posts and images [skip ci]"
+            git push origin main
+          fi
