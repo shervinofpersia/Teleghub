@@ -7,7 +7,7 @@ from datetime import datetime
 
 # ========== تنظیمات ==========
 CHANNELS = [
-    "aishervin", "appxa", "appxa2", "IRNOTPHONE",
+    "aishervin", "isherewin", "mahsa_alert", "appxa", "appxa2", "IRNOTPHONE",
     "SlipNet_decode", "blackRay", "SparrK_VPN", "slipnet_chat",
     "SlipNet_app", "VConfing", "capcutchina"
 ]
