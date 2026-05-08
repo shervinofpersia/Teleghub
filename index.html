@@ -233,14 +233,6 @@
     <div class="post">
         <div class="post-header">
             <span class="channel">@appxa</span>
-            <span class="datetime">2026-05-06 01:26:14</span>
-        </div>
-        <div class="text">مرحله دوم گوگل اسکریپتوجه: از جیمیل اصلی استفاده نکنید! ممکن است جیمیل مسدود شودبرید به سایت گوگل اسکریپ و یک پروژه جدید ایجاد کنید. https://script.google.com/بزنید روی New projectهر چی هست پاک کنید و لینک زیر رو باز کنید  و کد داخلش رو پیست کنیدhttps://github.com/denuitt1/mhr-cfw/blob/main/script/Code.gsتوضیحات انگلیش:1. Open Google Apps Script and sign in with your Google account.2. Click New project.3. Delete all the default code in the editor.4. Open the Code.gs file from this project (under script/), copy everything, and paste it into the Apps Script editor.</div>
-    </div>
-
-    <div class="post">
-        <div class="post-header">
-            <span class="channel">@appxa</span>
             <span class="datetime">2026-05-06 01:30:51</span>
         </div>
         <div class="text">مرحله سومفقط داخل کد گوگل اسکریپ دو جا باید تغییر بدین:قسمت AUTH_KEY یه پسورد دلخواه بزاریدقسمت ورکر URL آدرس ورکر کلودفلیر که ساختین بزاریدتوضیحات انگلیش:5. Important: Change the password on this line to something only you know, also replace the worker url with your cloudflare worker:const AUTH_KEY = "your-secret-password-here";const WORKER_URL = "https://myworker.workers.dev";بزنید روی دیپلوی آبی رنگ بالا بعد new deploymentClick Deploy → New deployment.</div>
@@ -268,6 +260,14 @@
             <span class="datetime">2026-05-06 01:42:21</span>
         </div>
         <div class="text">مرحله ششماگر روی لینک web app کلیک کردین و این صفحه اومد یعنی تمام مراحل رو درست رفتین.اگر کلید دیپلویمنت رو گرفتین و ابن صفحه could not زد اشکالی نداره ادامه بدین.بار اول واسه من نیومد دوباره مراحل دیپلوی رو از اول رفتم اوکی شد.باید پایتون روی سیستم نصب باشه داخل پاورشل این دستورات رو بزنید تا دانلود و نصب کنه:git clone https://github.com/denuitt1/mhr-cfw.gitcd mhr-cfwpip install -r requirements.txtحالا برید فایل run.bat رو اجرا کنید. توی لینوکس run.shدو سوال میپرسه:میگه پسورد دلخواهی که تو گوگل اسکریپ زدین چیه وارد کنید.سوال بعدی Deployment ID رو وارد کنید و تمام.حالا پروکسی رو باید داخل مرورگر بزنید:127.0.0.1:8085اگر از فایرفاکس استفاده می کنید راحت تر هست:Firefox (recommended — easiest)Firefox → ☰ menu → SettingsSearch "proxy" in the search boxClick Settings… under Network SettingsChoose Manual proxy configurationHTTP Proxy: 127.0.0.1 Port: 8085Check "Also use this proxy for HTTPS"Click OKChrome / EdgeInstall the Proxy SwitchyOmega extension and set proxy to 127.0.0.1:8085.</div>
+    </div>
+
+    <div class="post">
+        <div class="post-header">
+            <span class="channel">@appxa</span>
+            <span class="datetime">2026-05-06 08:02:02</span>
+        </div>
+        <div class="text">Mhr-Cfw-Goباز کردن تمام سایت هابرنامه بالا به زبان پایتون بود و باید پایتون نصب داشته باشید.این نسخه به زبان Go هست و باید Go نصب باشه.این نسخه مخصوص ویندوز هستتفاوت این نسخه با پایتون:حل مشکل یوتیوب: تو نسخه پایتون قبلی، یوتیوب درست باز نمی‌شد یا ویدیوها لود نمی‌شدنسرعت بهتر: استفاده از پروتکل HTTP/2، کش کردن اطلاعات ثابت (Caching) و استفاده مجدد از کانکشن‌ها باعث شده سرعت و پایداری این نسخه اصلاً با پایتون قابل مقایسه نباشه.https://github.com/ThisIsDara/mhr-cfw-go@APPXA</div>
     </div>
 
     <div class="post">
@@ -471,22 +471,6 @@
     <div class="post">
         <div class="post-header">
             <span class="channel">@VConfing</span>
-            <span class="datetime">2026-05-05 21:31:10</span>
-        </div>
-        <div class="text">SlipNet (VayDNS)بزنید سه نقطه بالا بزنید رو import Profiles و کانفیگ زیر رو وارد کنید<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AUqvxcT3GFZankAymgMHTa13bCIJ4gwmM+UE+acQ9i6f8BRWuihx9cxBrHF7/ejqfe+e51jSPNREYJrRakIhcxj9FNG5KWVFbTzISjhVHGm6DdoiepyYrAuzq0W0eegQ7VTjgZY2XEmp8DFWBhtKwWblNMYU9R5LQ0MhE0HKqS9iXdTKkq16dFMn+S4sNl+VG0Elpuz2yCHu4PoCfhZBlAfJFD0npQElcFGlYnQygO/j2as1SnwQNHo41MZzuko9AIj+sWWRFkuqxXriUv1NL5mvX4CQBrR36Cq58nRU54yaEZODIJOvNA+HXx5Bucf2yq/fuG1IGP+28CCCNLn88FosuXzaUV0KjIzPy3XY5frJlr4350JINVTNp3N0GnkCjrM8KVufUVEIySQLVwhsQp0WrcZgjfRR4HQGliW664qs9GY7/3FPe3AeGBDmrORmCTsD4n3i20TKegjlIP+B1AczUmJppZ0PPVqeXqCUm8825pGkn28g1oZAX/u+pEsgs9M2uGO+6jnngvUp/LiXRbfxc6nvq2NIFwgHogPxemSoKJqJg4n0ARL+d7s6x5D/oNODpd8AT0AWOdJpOpYzJ/meFSoabs23pY+YzHi1ANSd5nKv64lai3PYyvwnT2P5gx7E/PK7lEUbd7G6BLbxFnSeGo9ZXD2HLVAWjSg+78vZs/oVxP6rjA0Q3zPFgyDhfemYlR2A/2mq1G6xkM0BxOvyDn7E/hGdoE0D9Nmp+7ThYQfZqlzMqPWeK6MStWGW/U6CCduCPISOAJ7QLm/YdlbtMF0rgLO/4xN/pwETYXwEHPumXbKoFY53bI35RdPbqwTfkQhuبه</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AUqvxcT3GFZankAymgMHTa13bCIJ4gwmM+UE+acQ9i6f8BRWuihx9cxBrHF7/ejqfe+e51jSPNREYJrRakIhcxj9FNG5KWVFbTzISjhVHGm6DdoiepyYrAuzq0W0eegQ7VTjgZY2XEmp8DFWBhtKwWblNMYU9R5LQ0MhE0HKqS9iXdTKkq16dFMn+S4sNl+VG0Elpuz2yCHu4PoCfhZBlAfJFD0npQElcFGlYnQygO/j2as1SnwQNHo41MZzuko9AIj+sWWRFkuqxXriUv1NL5mvX4CQBrR36Cq58nRU54yaEZODIJOvNA+HXx5Bucf2yq/fuG1IGP+28CCCNLn88FosuXzaUV0KjIzPy3XY5frJlr4350JINVTNp3N0GnkCjrM8KVufUVEIySQLVwhsQp0WrcZgjfRR4HQGliW664qs9GY7/3FPe3AeGBDmrORmCTsD4n3i20TKegjlIP+B1AczUmJppZ0PPVqeXqCUm8825pGkn28g1oZAX/u+pEsgs9M2uGO+6jnngvUp/LiXRbfxc6nvq2NIFwgHogPxemSoKJqJg4n0ARL+d7s6x5D/oNODpd8AT0AWOdJpOpYzJ/meFSoabs23pY+YzHi1ANSd5nKv64lai3PYyvwnT2P5gx7E/PK7lEUbd7G6BLbxFnSeGo9ZXD2HLVAWjSg+78vZs/oVxP6rjA0Q3zPFgyDhfemYlR2A/2mq1G6xkM0BxOvyDn7E/hGdoE0D9Nmp+7ThYQfZqlzMqPWeK6MStWGW/U6CCduCPISOAJ7QLm/YdlbtMF0rgLO/4xN/pwETYXwEHPumXbKoFY53bI35RdPbqwTfkQhuبه')">📋 کپی</button></div> کانفیگ بالا وصل شید و بعد به پروکسی پایین داخل تلگرام وصل شیدترکیب با پروکسی https://t.me/socks?server=127.0.0.1&amp;port=1080تنظیمات رو از داخل SlipNet وارد کنید👇Listen Port : 1080Proxy-only mode : (on)HTTP proxy :(on)</div>
-    </div>
-
-    <div class="post">
-        <div class="post-header">
-            <span class="channel">@VConfing</span>
-            <span class="datetime">2026-05-05 21:48:46</span>
-        </div>
-        <div class="text">SlipNet (VayDNS+SSH)بزنید سه نقطه بالا بزنید رو import Profiles و کانفیگ زیر رو وارد کنید<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://ASvnciiywcf44e/55aJkmhoufhknPzv7K+XQ8S5/vtwP9pVF0Cx0vyP8gzRpup4rdYgv1ajmEfKDsOUlT8jjfGuA6sr08FWJRd0RmLMa3FNJW3Xcm78UmgdgMG+hwOuoDmG1hxgVXVzIYxtwQrqyevfZWorBT10qhUPn3k7ly7P+sc4LvIVNr7GC/gCIGTbTqZBXuDQsvukOfjfN3N+01qIHqQoXgD4KJAy82Z0pJVbC0lT9PnV2rtXoIkVGbl9XW+MKweWT/ILTTxlMCN0OZrTe+U6dAstLB0S1xONDCOa8jd5+zR9Ec5I/50uBrTbeh2aiUXhVV7gBLPE0OiZqKZJCnRgF9UaXK67RCmlN4MRqB9URXNqkmHfo6FwhdWeXzgnGOlch4eorJYWH2W/PsFuLi+BC6utin1QIffl4Ds8ybZLRLjJ9iQbxSrgehbpbH/w1o/9ZZC9Ax3ohrHZd4QyRjCqMohBERiSd99MNshNQQdLr/EeeN44YgZ+xGgY4F/JwASBGmWGEUZe/BKDUWTBNq/VsnG7V2rFG1S5TnWl9z8c5w8P236ICutP8BIqFEeM7sILrDGhMjntO1NHzjfG8dAyuCY2x0S2wnVztqvTjuDLOiW+OG7Sy8QCk32O8uhjXmBlkTLiOcMIPFvBd7eK3aC0/9+w886paSAtkK/nbMpvjI12zCiWtDQQ/bgiQ36UDpPpEY1HAGE69hxS4MrJYl0k2fnBypradAzNyrtgVA5vWZXV6XzLqac9iKFA6AY1U8Zfil/3I2G7mDaZ0BirC8MHW/v6vt3Wmf6ED0Y6ubvxrKa68A4xaa/aac8dIبه</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://ASvnciiywcf44e/55aJkmhoufhknPzv7K+XQ8S5/vtwP9pVF0Cx0vyP8gzRpup4rdYgv1ajmEfKDsOUlT8jjfGuA6sr08FWJRd0RmLMa3FNJW3Xcm78UmgdgMG+hwOuoDmG1hxgVXVzIYxtwQrqyevfZWorBT10qhUPn3k7ly7P+sc4LvIVNr7GC/gCIGTbTqZBXuDQsvukOfjfN3N+01qIHqQoXgD4KJAy82Z0pJVbC0lT9PnV2rtXoIkVGbl9XW+MKweWT/ILTTxlMCN0OZrTe+U6dAstLB0S1xONDCOa8jd5+zR9Ec5I/50uBrTbeh2aiUXhVV7gBLPE0OiZqKZJCnRgF9UaXK67RCmlN4MRqB9URXNqkmHfo6FwhdWeXzgnGOlch4eorJYWH2W/PsFuLi+BC6utin1QIffl4Ds8ybZLRLjJ9iQbxSrgehbpbH/w1o/9ZZC9Ax3ohrHZd4QyRjCqMohBERiSd99MNshNQQdLr/EeeN44YgZ+xGgY4F/JwASBGmWGEUZe/BKDUWTBNq/VsnG7V2rFG1S5TnWl9z8c5w8P236ICutP8BIqFEeM7sILrDGhMjntO1NHzjfG8dAyuCY2x0S2wnVztqvTjuDLOiW+OG7Sy8QCk32O8uhjXmBlkTLiOcMIPFvBd7eK3aC0/9+w886paSAtkK/nbMpvjI12zCiWtDQQ/bgiQ36UDpPpEY1HAGE69hxS4MrJYl0k2fnBypradAzNyrtgVA5vWZXV6XzLqac9iKFA6AY1U8Zfil/3I2G7mDaZ0BirC8MHW/v6vt3Wmf6ED0Y6ubvxrKa68A4xaa/aac8dIبه')">📋 کپی</button></div> کانفیگ بالا وصل شید و بعد به پروکسی پایین داخل تلگرام وصل شیدترکیب با پروکسی https://t.me/socks?server=127.0.0.1&amp;port=1080تنظیمات رو از داخل SlipNet وارد کنید👇Listen Port : 1080Proxy-only mode : (on)HTTP proxy :(on)</div>
-    </div>
-
-    <div class="post">
-        <div class="post-header">
-            <span class="channel">@VConfing</span>
             <span class="datetime">2026-05-06 09:24:53</span>
         </div>
         <div class="text">رباتایی که تست میدنو بزارم؟!</div>
@@ -506,6 +490,22 @@
             <span class="datetime">2026-05-06 14:11:13</span>
         </div>
         <div class="text">SlipNet (VayDNS+SSH)بزنید سه نقطه بالا بزنید رو import Profiles و کانفیگ زیر رو وارد کنید<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://ASvnciiywcf44e/55aJkmhoufhknPzv7K+XQ8S5/vtwP9pVF0Cx0vyP8gzRpup4rdYgv1ajmEfKDsOUlT8jjfGuA6sr08FWJRd0RmLMa3FNJW3Xcm78UmgdgMG+hwOuoDmG1hxgVXVzIYxtwQrqyevfZWorBT10qhUPn3k7ly7P+sc4LvIVNr7GC/gCIGTbTqZBXuDQsvukOfjfN3N+01qIHqQoXgD4KJAy82Z0pJVbC0lT9PnV2rtXoIkVGbl9XW+MKweWT/ILTTxlMCN0OZrTe+U6dAstLB0S1xONDCOa8jd5+zR9Ec5I/50uBrTbeh2aiUXhVV7gBLPE0OiZqKZJCnRgF9UaXK67RCmlN4MRqB9URXNqkmHfo6FwhdWeXzgnGOlch4eorJYWH2W/PsFuLi+BC6utin1QIffl4Ds8ybZLRLjJ9iQbxSrgehbpbH/w1o/9ZZC9Ax3ohrHZd4QyRjCqMohBERiSd99MNshNQQdLr/EeeN44YgZ+xGgY4F/JwASBGmWGEUZe/BKDUWTBNq/VsnG7V2rFG1S5TnWl9z8c5w8P236ICutP8BIqFEeM7sILrDGhMjntO1NHzjfG8dAyuCY2x0S2wnVztqvTjuDLOiW+OG7Sy8QCk32O8uhjXmBlkTLiOcMIPFvBd7eK3aC0/9+w886paSAtkK/nbMpvjI12zCiWtDQQ/bgiQ36UDpPpEY1HAGE69hxS4MrJYl0k2fnBypradAzNyrtgVA5vWZXV6XzLqac9iKFA6AY1U8Zfil/3I2G7mDaZ0BirC8MHW/v6vt3Wmf6ED0Y6ubvxrKa68A4xaa/aac8dIبه</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://ASvnciiywcf44e/55aJkmhoufhknPzv7K+XQ8S5/vtwP9pVF0Cx0vyP8gzRpup4rdYgv1ajmEfKDsOUlT8jjfGuA6sr08FWJRd0RmLMa3FNJW3Xcm78UmgdgMG+hwOuoDmG1hxgVXVzIYxtwQrqyevfZWorBT10qhUPn3k7ly7P+sc4LvIVNr7GC/gCIGTbTqZBXuDQsvukOfjfN3N+01qIHqQoXgD4KJAy82Z0pJVbC0lT9PnV2rtXoIkVGbl9XW+MKweWT/ILTTxlMCN0OZrTe+U6dAstLB0S1xONDCOa8jd5+zR9Ec5I/50uBrTbeh2aiUXhVV7gBLPE0OiZqKZJCnRgF9UaXK67RCmlN4MRqB9URXNqkmHfo6FwhdWeXzgnGOlch4eorJYWH2W/PsFuLi+BC6utin1QIffl4Ds8ybZLRLjJ9iQbxSrgehbpbH/w1o/9ZZC9Ax3ohrHZd4QyRjCqMohBERiSd99MNshNQQdLr/EeeN44YgZ+xGgY4F/JwASBGmWGEUZe/BKDUWTBNq/VsnG7V2rFG1S5TnWl9z8c5w8P236ICutP8BIqFEeM7sILrDGhMjntO1NHzjfG8dAyuCY2x0S2wnVztqvTjuDLOiW+OG7Sy8QCk32O8uhjXmBlkTLiOcMIPFvBd7eK3aC0/9+w886paSAtkK/nbMpvjI12zCiWtDQQ/bgiQ36UDpPpEY1HAGE69hxS4MrJYl0k2fnBypradAzNyrtgVA5vWZXV6XzLqac9iKFA6AY1U8Zfil/3I2G7mDaZ0BirC8MHW/v6vt3Wmf6ED0Y6ubvxrKa68A4xaa/aac8dIبه')">📋 کپی</button></div> کانفیگ بالا وصل شید و بعد به پروکسی پایین داخل تلگرام وصل شیدترکیب با پروکسی https://t.me/socks?server=127.0.0.1&amp;port=1080تنظیمات رو از داخل SlipNet وارد کنید👇Listen Port : 1080Proxy-only mode : (on)HTTP proxy :(on)</div>
+    </div>
+
+    <div class="post">
+        <div class="post-header">
+            <span class="channel">@VConfing</span>
+            <span class="datetime">2026-05-06 19:48:11</span>
+        </div>
+        <div class="text">SlipNet صبر میخواد برای وصل شدن(VayDNS)بزنید سه نقطه بالا بزنید رو import Profiles و کانفیگ زیر رو وارد کنید<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AeHK9D/w9bja1m4r1WZqq4UwgBCZpc9EiTW8SY9W+n4me0kPeIjaMLuApw82aBALEgkEldZk5+MZ5rTehUaNQUuVfu0WXZZLzodhnF3aSIxDeW236rpajxzDG/xNOlSyiJ1KNNyGrZie+/Ee7Vmn5cgq45TIqvdxu6ZHBI6DAX4o6GRb6hnJiE+Lxs7Z5ixqdJs1GPyXMukoA17bTq9ymGTKYE9EB2/BYncQfOsE9hiYkDcz/9lFwtdM1kDPoGzlucakIQe3cPUdSjy9eTu3i+FtSCda6fXfPgri1z4cIOH6T2zUP2CH5sM7h+Zulct/XyzMMIdSuisUKiy1kRVaauPnNjnLCi3MKi/TjLVHLtGYvUeXu+cd0N4EPJDLcbPN3eDEMMeAoafuvXmi5Y0RJ2nLHSg4DnRVgJJCCOLdx3XbbOu8jDAOk+BJRVKuwoVu2Lyl1NCGbbaB2la8q6XofDrdHqGBxzAqHx0vnk0mdLaGM/Ve8nl+VVrSk4dB8aEd8MwJKLb2fCzOMFbt3Goa0SkPHV8p4ukLXpxZMf9a8f+1q3jL62HKj66h1YBcnOwAvHR4ef+0hns9M4bvzB8G/nR7YomEBKdf2nw5Q/+LnKNHK+IUy+9oQVOzAWmUoPj9aQuEc+1M+CGOk1XdVJa9QwsfLX9awYBVZw==به</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AeHK9D/w9bja1m4r1WZqq4UwgBCZpc9EiTW8SY9W+n4me0kPeIjaMLuApw82aBALEgkEldZk5+MZ5rTehUaNQUuVfu0WXZZLzodhnF3aSIxDeW236rpajxzDG/xNOlSyiJ1KNNyGrZie+/Ee7Vmn5cgq45TIqvdxu6ZHBI6DAX4o6GRb6hnJiE+Lxs7Z5ixqdJs1GPyXMukoA17bTq9ymGTKYE9EB2/BYncQfOsE9hiYkDcz/9lFwtdM1kDPoGzlucakIQe3cPUdSjy9eTu3i+FtSCda6fXfPgri1z4cIOH6T2zUP2CH5sM7h+Zulct/XyzMMIdSuisUKiy1kRVaauPnNjnLCi3MKi/TjLVHLtGYvUeXu+cd0N4EPJDLcbPN3eDEMMeAoafuvXmi5Y0RJ2nLHSg4DnRVgJJCCOLdx3XbbOu8jDAOk+BJRVKuwoVu2Lyl1NCGbbaB2la8q6XofDrdHqGBxzAqHx0vnk0mdLaGM/Ve8nl+VVrSk4dB8aEd8MwJKLb2fCzOMFbt3Goa0SkPHV8p4ukLXpxZMf9a8f+1q3jL62HKj66h1YBcnOwAvHR4ef+0hns9M4bvzB8G/nR7YomEBKdf2nw5Q/+LnKNHK+IUy+9oQVOzAWmUoPj9aQuEc+1M+CGOk1XdVJa9QwsfLX9awYBVZw==به')">📋 کپی</button></div> کانفیگ بالا وصل شید و بعد به پروکسی پایین داخل تلگرام وصل شیدترکیب با پروکسی https://t.me/socks?server=127.0.0.1&amp;port=1080تنظیمات رو از داخل SlipNet وارد کنید👇Listen Port : 1080Proxy-only mode : (on)HTTP proxy :(on)</div>
+    </div>
+
+    <div class="post">
+        <div class="post-header">
+            <span class="channel">@VConfing</span>
+            <span class="datetime">2026-05-06 21:20:39</span>
+        </div>
+        <div class="text">SlipNet (VayDNS+SSH)بزنید سه نقطه بالا بزنید رو import Profiles و کانفیگ زیر رو وارد کنید<div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AdT/i1tG5aLWrRmiFTbRFE0ShDw0Z34TQ05KI61omqjy31AlF8ef/e+vItfTj9IymOzXjp2+mg3AzlizhEQQykVjvxfq+777kVX7tKRmL8MaLdyWTh4g0frrQLv3/nhzjXQksC1Dc+NEyTeThzdQbZ7hKaMJfkUUS3O52oHM43qwEA59x0IbCOtQhOWHSMjG1a/2mOXr3TixB2f4N0PrvNZ3p1v3y6MR8ypEA1hxR6771pCvpS0etBJ9s2jQuez29KuEZWVOW66oYiaKp9f6ADZ71tIIcYLN4SJc7BrytFHdc2QtdOFeb05re7ON+yFhTnuXrQz6O2sJqrFa7PC4eWO2ec7uEtGIGY0IOKe29XDRfdHeOcVZEfgTcgHRDVbc+q4wHEkaEOzAFgdzHAEvrgEBNY8nwq359N6HKwDv7N75JnA2xSMSlon+Zwclil7qoaW/5q8xzFlit4gYBFc0Kddan1LtvsVOtH+rj4QA6iCRfSsFgJKryQ5SEkrjbd3zhXy2R+36gmpSTNHDnGM7TA1JuB2UCmTAQRJeYTF9e+OVnunjVSS+2t8+LS/CDAqM5Y2Hlr1hXTdveVC2GwfAUGDXbrPkk43lpWFw/CmDeGsjUIP+vBcXlyXmdL/S+JqYG90vQ5Rrpb7wxkH64hEAUYNHqgG+BeDImYUitPu5msfV/iDHRIB803pNeO0eHNigyzsRAxHyD2SDXyYUNyWS8a+rR7nlJeRhsSzK+1ioelKRPnjqU4BbWRZf1X6TNNEsddnpB3npd6J2VHlGmOshJ0RG2EbIMhlf0EE=به</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AdT/i1tG5aLWrRmiFTbRFE0ShDw0Z34TQ05KI61omqjy31AlF8ef/e+vItfTj9IymOzXjp2+mg3AzlizhEQQykVjvxfq+777kVX7tKRmL8MaLdyWTh4g0frrQLv3/nhzjXQksC1Dc+NEyTeThzdQbZ7hKaMJfkUUS3O52oHM43qwEA59x0IbCOtQhOWHSMjG1a/2mOXr3TixB2f4N0PrvNZ3p1v3y6MR8ypEA1hxR6771pCvpS0etBJ9s2jQuez29KuEZWVOW66oYiaKp9f6ADZ71tIIcYLN4SJc7BrytFHdc2QtdOFeb05re7ON+yFhTnuXrQz6O2sJqrFa7PC4eWO2ec7uEtGIGY0IOKe29XDRfdHeOcVZEfgTcgHRDVbc+q4wHEkaEOzAFgdzHAEvrgEBNY8nwq359N6HKwDv7N75JnA2xSMSlon+Zwclil7qoaW/5q8xzFlit4gYBFc0Kddan1LtvsVOtH+rj4QA6iCRfSsFgJKryQ5SEkrjbd3zhXy2R+36gmpSTNHDnGM7TA1JuB2UCmTAQRJeYTF9e+OVnunjVSS+2t8+LS/CDAqM5Y2Hlr1hXTdveVC2GwfAUGDXbrPkk43lpWFw/CmDeGsjUIP+vBcXlyXmdL/S+JqYG90vQ5Rrpb7wxkH64hEAUYNHqgG+BeDImYUitPu5msfV/iDHRIB803pNeO0eHNigyzsRAxHyD2SDXyYUNyWS8a+rR7nlJeRhsSzK+1ioelKRPnjqU4BbWRZf1X6TNNEsddnpB3npd6J2VHlGmOshJ0RG2EbIMhlf0EE=به')">📋 کپی</button></div> کانفیگ بالا وصل شید و بعد به پروکسی پایین داخل تلگرام وصل شیدترکیب با پروکسی https://t.me/socks?server=127.0.0.1&amp;port=1080تنظیمات رو از داخل SlipNet وارد کنید👇Listen Port : 1080Proxy-only mode : (on)HTTP proxy :(on)</div>
     </div>
 
     <div class="post">
@@ -549,7 +549,7 @@
     </div>
 
     <div id="toast" class="toast">✅ کپی شد!</div>
-    <footer>آخرین به‌روزرسانی: 2026-05-08 21:34:48 | تصاویر به صورت محلی در مخزن ذخیره شده‌اند.</footer>
+    <footer>آخرین به‌روزرسانی: 2026-05-08 22:59:23 | تصاویر به صورت محلی در مخزن ذخیره شده‌اند.</footer>
 </div>
 <script>
     function copyToClipboard(text) {
