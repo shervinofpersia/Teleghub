@@ -233,30 +233,6 @@
     <div class="post">
         <div class="post-header">
             <span class="channel">@appxa</span>
-            <span class="datetime">2026-05-10 11:43:38</span>
-        </div>
-        <div class="text">آموزش goose relay vpn با ترموکسسرعت پایین</div>
-    </div>
-
-    <div class="post">
-        <div class="post-header">
-            <span class="channel">@appxa</span>
-            <span class="datetime">2026-05-10 11:45:45</span>
-        </div>
-        <div class="text">const RELAY_URL = 'http://23.106.46.230:8453/tunnel';const FORWARDER_VERSION = 1;const PROTOCOL_VERSION = 1;function doPost(e) {  bumpInvocationCount_();  const payload = (e &amp;&amp; e.postData &amp;&amp; e.postData.contents) || '';  const resp = UrlFetchApp.fetch(RELAY_URL, {    method: 'post',    contentType: 'text/plain',    payload: payload,    muteHttpExceptions: true,    followRedirects: false,    deadline: 30,  // seconds; long-poll window is kept at 8s for Apps Script stability  });  return ContentService    .createTextOutput(resp.getContentText())    .setMimeType(ContentService.MimeType.TEXT);}// doGet returns this deployment's per-day invocation count so the client can// log real per-deployment usage alongside its own client-side counter. The// day boundary tracks the Apps Script quota window (midnight Pacific). Format// is JSON so the client can parse without ambiguity://   {"ok":true,"date":"2026-05-04","count":1234}function doGet(e) {  if (e &amp;&amp; e.parameter &amp;&amp; e.parameter.legacy === '1') {    return ContentService      .createTextOutput('GooseRelay forwarder OK')      .setMimeType(ContentService.MimeType.TEXT);  }  const props = PropertiesService.getScriptProperties();  const today = pacificDateKey_();  const count = parseInt(props.getProperty('count_' + today) || '0', 10);  const out = {    ok: true,    date: today,    count: count,    version: FORWARDER_VERSION,    protocol: PROTOCOL_VERSION,  };  return ContentService    .createTextOutput(JSON.stringify(out))    .setMimeType(ContentService.MimeType.JSON);}function pacificDateKey_() {  return Utilities.formatDate(new Date(), 'America/Los_Angeles', 'yyyy-MM-dd');}// bumpInvocationCount_ records one invocation in PropertiesService keyed by// today's PT date. Best-effort: under high concurrency two requests may read// the same value and write the same incremented number, slightly under-counting.// That's acceptable for an informational counter — adding a LockService gate// would add tens of ms to every tunnel request, which costs more than perfect// accuracy is worth.function bumpInvocationCount_() {  try {    const props = PropertiesService.getScriptProperties();    const today = pacificDateKey_();    const key = 'count_' + today;    const raw = props.getProperty(key);    if (raw === null) {      // First request of a new day — purge yesterday's keys so the property      // store doesn't grow unbounded (capped at 9 KB / 500 entries by Google).      pruneStaleCounts_(props, today);    }    const cur = raw === null ? 0 : parseInt(raw, 10);    props.setProperty(key, String(cur + 1));  } catch (err) {    // Property writes can fail under contention; counting is informational    // so we swallow the error rather than break the tunnel request.  }}function pruneStaleCounts_(props, today) {  const keys = props.getKeys();  const keep = 'count_' + today;  for (let i = 0; i &lt; keys.length; i++) {    const k = keys[i];    if (k.indexOf('count_') === 0 &amp;&amp; k !== keep) {      props.deleteProperty(k);    }  }}</div>
-    </div>
-
-    <div class="post">
-        <div class="post-header">
-            <span class="channel">@appxa</span>
-            <span class="datetime">2026-05-10 11:50:10</span>
-        </div>
-        <div class="text">فایل goose رو دانلود کنید: بزن رو لینک میاد https://t.me/appxa/12985- ابتدا برای این هم یک deployment ID می سازیم ۱- سایت script.google.com برید.۲ـ گزینه new project میزنید و چنتا کد وجود داره همه اونارو پاک میکنید و به جاش کد های زیر رو وارد میکنید :بزن رو لینک https://t.me/appxa/12986- حالا سمت بالا راست deploy و بعدش new deployment رو می زنید.- تو صفحه جدید یه علامت شبیه تنظیمات هست اونو می زنید و گزینه web app رو انتخاب می‌کنید.- به جای set excute گزینه Me و به جای has access گزنه Anyone رو می‌زنید.-حالا deploy رو می‌زنید یه احراز ازتون میخواد انجام بدید و اگر خطا داد گزینه advance رو بزنید که پایینش یه لینک میده اونو بزنید بعد تایید و حالا بهتون deployment ID رو میده کپی کنید-فایلی که دانلود کردید رو  از پوشه تلگرام انتقال بدید به پوشه دانلود-وارد ترموکس بشید .دسترسی به حافظه : termux-setup-storage- کدهای زیر رو بزنید حواستون باشه فایل ها دقیق به جایی که گفتم برده باشید cd ~/storage/downloads &amp;&amp; mv GooseRelayVPN-client-v1.6.0-android-arm64.tar.gz ~/ &amp;&amp; cd ~/ &amp;&amp; tar -xvzf GooseRelayVPN-client-v1.6.0-android-arm64.tar.gz &amp;&amp; cd GooseRelayVPN-client-v1.6.0-android-arm64- با کد زیر یک کپی از پوشه مربوطه گرفته میشه .cp client_config.example.json client_config.json- با دستور زیر وارد فایل کانفیگ میشیدnano client_config.jsonسه قسمت از deployment ID خواهید دید اگر یک ID دارید اون رو توی هر سه قسمت بزارید- در قسمت tunnel key کد زیر رو وارد کنید:(هرچی داخل دوتا کاما " " هست)0bb2bef2723a9fa174c754f92071034e9552c8ec518326edc1853c3e9b6915b6و بعدش CTRL و X و بعدش y رو بزنید تا ذخیره بشه و سپس اینتر کنید تا خارج بشه - کد زیر رو بزنید mv goose-client client_config.json client_config.example.json ~/ &amp;&amp; cd ~/- دسترسی به کلاینت chmod +x goose-clientحالا برای اجرای فایل ها دستور زیر رو بزنید ./goose-client -config client_config.jsonبرای تلگرام به پروکسی زیر متصل بشید https://t.me/socks?server=127.0.0.1&amp;port=1080</div>
-    </div>
-
-    <div class="post">
-        <div class="post-header">
-            <span class="channel">@appxa</span>
             <span class="datetime">2026-05-11 03:05:18</span>
         </div>
         <div class="text"><div class="slipnet-url"><span style="word-break:break-all;">slipnet-enc://AU/Ui4wQFT9uZD4MTKe6DgthQ8EfIO0BsexOsKyeo452kH1s+n9yh6l+9w24ezaVPhZ4cxMApA4ksrbcl1f3+bzfNpCU1+Hkhp+9wBNC1oUy9Xm6TlbdE2WuDtxgjSgUEaLzjd+1hBYedbd+Veq1DGvdj7prsH5JWLBBFQ9u8qrGlvLleu8d1v3SO40lXdr1pdnpoSWtfNMGztNU4Wusyiywxg9PGf8d+Z9VbXn8vuvl7HCvduA0WkEe9V/jaj1Xnjv5M6u4WaHTDEWlWTaXF9A4pA2GDn+KvGAGqWAK/GejTitJu88rWUdh02+juQ/WtlAOqOEBgtMF3UixRQlQYVFeRsf/O7LkhLyLSg7Hht6VaacaaSMEraSAbfEAtQFcEbXXM1RrYH55EG7faxOJNWlT5DM8Fm7X+U7bslyt6bs+pmXS/E4DnKKbhXIyyyF5szQhrT6QRkoTJ2ysY6daTrQpCW0lZnWQ6IhIimZ1WVCkQq8ucD+6cStdH52jSYc05zrPgRaNjZN/phpP8ht+IDGcachQQacg7C1CRltorQUkyarblD7YWcVQffQ8QR8eWVfX0QS1sPq7L7lQnWp4hd1XD0yHoicBz15LZnUsrOjhNIWjMIOVA51gUxX00Nu3Fw3oCUN8swwxeoQI3YYil/cLg3FC9g==همراه</span><button class="copy-btn" onclick="copyToClipboard('slipnet-enc://AU/Ui4wQFT9uZD4MTKe6DgthQ8EfIO0BsexOsKyeo452kH1s+n9yh6l+9w24ezaVPhZ4cxMApA4ksrbcl1f3+bzfNpCU1+Hkhp+9wBNC1oUy9Xm6TlbdE2WuDtxgjSgUEaLzjd+1hBYedbd+Veq1DGvdj7prsH5JWLBBFQ9u8qrGlvLleu8d1v3SO40lXdr1pdnpoSWtfNMGztNU4Wusyiywxg9PGf8d+Z9VbXn8vuvl7HCvduA0WkEe9V/jaj1Xnjv5M6u4WaHTDEWlWTaXF9A4pA2GDn+KvGAGqWAK/GejTitJu88rWUdh02+juQ/WtlAOqOEBgtMF3UixRQlQYVFeRsf/O7LkhLyLSg7Hht6VaacaaSMEraSAbfEAtQFcEbXXM1RrYH55EG7faxOJNWlT5DM8Fm7X+U7bslyt6bs+pmXS/E4DnKKbhXIyyyF5szQhrT6QRkoTJ2ysY6daTrQpCW0lZnWQ6IhIimZ1WVCkQq8ucD+6cStdH52jSYc05zrPgRaNjZN/phpP8ht+IDGcachQQacg7C1CRltorQUkyarblD7YWcVQffQ8QR8eWVfX0QS1sPq7L7lQnWp4hd1XD0yHoicBz15LZnUsrOjhNIWjMIOVA51gUxX00Nu3Fw3oCUN8swwxeoQI3YYil/cLg3FC9g==همراه')">📋 کپی</button></div> اول</div>
@@ -268,6 +244,30 @@
             <span class="datetime">2026-05-11 03:35:51</span>
         </div>
         <div class="text">{  "version": "1.3",  "configs": [    {      "name": "adaspolo",      "tunnelDomain": "d2.adaspolo2.store",      "transportType": "dnstt",      "tunnelType": "socks5",      "publicKey": "7d032d42bd0c552c29bc2c57bf7788fa55da5aa09a9aba3c016a1af5b3e50b6f"  }  ]  }</div>
+    </div>
+
+    <div class="post">
+        <div class="post-header">
+            <span class="channel">@appxa</span>
+            <span class="datetime">2026-05-11 03:36:02</span>
+        </div>
+        <div class="text">{  "version": "1.3",  "configs": [     {       "name": "adaspolo",       "tunnelDomain": "d2.adaspolo2.store",       "transportType": "dnstt",       "tunnelType": "socks5",       "publicKey": "7d032d42bd0c552c29bc2c57bf7788fa55da5aa09a9aba3c016a1af5b3e50b6f"…</div>
+    </div>
+
+    <div class="post">
+        <div class="post-header">
+            <span class="channel">@appxa</span>
+            <span class="datetime">2026-05-11 03:46:44</span>
+        </div>
+        <div class="text">اگر کانفیگی که دارین جمنای رو باز نمی کنه باید دو کانفیگ رو زنجیره کنیدبه این صورت اول کانفیگ ایران رو بندازید بعد کانفیگ آمریکابرنامه exclave این قابلیت proxy chain رو داره.چند کانفیگ آمریکاss://YWVzLTI1Ni1nY206NW1DSDQ2MjRRZmxPMWNGUg@185.111.156.33:80#6%F0%9F%87%BA%F0%9F%87%B8ss://YWVzLTI1Ni1nY206OHQyeGVlbVV0eXVpNHpBdg@194.233.94.119:80#5%F0%9F%87%BA%F0%9F%87%B8ss://YWVzLTI1Ni1nY206NjNkN2MxNzUwNmQxZjQ4Yg@203.32.26.24:60981#4%F0%9F%87%BA%F0%9F%87%B8ss://YWVzLTEyOC1nY206c2hhZG93c29ja3M@37.19.198.236:443#3%F0%9F%87%BA%F0%9F%87%B8ss://YWVzLTEyOC1nY206c2hhZG93c29ja3M@173.244.56.6:443#2%F0%9F%87%BA%F0%9F%87%B8ss://YWVzLTEyOC1nY206c2hhZG93c29ja3M@141.98.101.178:443#1</div>
+    </div>
+
+    <div class="post">
+        <div class="post-header">
+            <span class="channel">@appxa</span>
+            <span class="datetime">2026-05-11 15:01:33</span>
+        </div>
+        <div class="text">دریافت دامنه رایگانتست نشده  .cyou .bond .xyz .art هر حساب Nicname می‌تواند ۳ دامنه .cyou و ۳ دامنه .bond درخواست کند، سپس با استفاده از کدهای تخفیف ایمیل، دامنه‌های .xyz و .art را بگیرد! مراحل:1.  ابتدا در سایت دامنه ثبت‌نام کنید: https://nicnames.com/en/signup2. وارد کانال دیسکورد شوید: https://discord.com/invite/doma3.  پس از تأیید اولیه، کانال nicnames-promos را پیدا کنید و دستور /promos را ارسال کنیدمی‌توانید به طور مداوم کدهای تخفیف برای ۳ دامنه .cyou و ۳ دامنه .bond دریافت کنید4. به منوی سمت چپ صفحه وب بازگردید و وارد Domains → Classic شویددامنه .bond یا .cyou تازه ثبت شده را پیدا کنید، دکمه تنظیمات در سمت راست را کلیک کنید5.  روی Tokenize کلیک کنید تا وارد صفحه عملیات شویدبلاک‌چین هدف را از Base Mainnet پیش‌فرض به Doma Mainnet تغییر دهید6. آدرس کیف پول کریپتو خود را در Recipient Wallet اضافه و انتخاب کنید7.  شرایط را بخوانید و موافقت کنید، سپس روی Continue کلیک کنید تا ارسال شود8. منتظر ایمیل بمانید، معمولاً دو ایمیل دریافت خواهید کرد:• کد تخفیف ۱۰۰٪ رایگان برای سال اول دامنه .xyz• کد تخفیف ۱۰۰٪ رایگان برای سال اول دامنه .art9. از این دو کد تخفیف استفاده کنید و فرایند ثبت‌نام را از مرحله ۴ تکرار کنید تا هر کدام یک دامنه .xyz و .art بگیرید@APPXA🎁 Free Top-Tier Domain Registration Bonus .cyou .bond .xyz .art💡 Each Nicname account can claim 3 .cyou and 3 .bond domains, then use email discount codes to grab .xyz and .art!📋 Steps:1️⃣ First, register on the domain site: https://nicnames.com/en/signup2️⃣ Enter the Discord channel: https://discord.com/invite/doma3️⃣ After initial verification, find the channel nicnames-promos and send /promosYou can continuously claim discount codes for 3 .cyou and 3 .bond domains4️⃣ Go back to the web page left menu and enter Domains → ClassicFind the newly registered .bond or .cyou domain, click the Settings button on the right5️⃣ Click Tokenize to enter the operation pageChange Target Blockchain from the default Base Mainnet to Doma Mainnet6️⃣ Add your crypto wallet address in Recipient Wallet and select it7️⃣ Read and agree to the terms, click Continue to submit8️⃣ Wait for the email to arrive, usually you will receive two:• .xyz domain first year 100% free discount code• .art domain first year 100% free discount code9️⃣ Use these two discount codes to repeat the registration process from step 4 to grab one .xyz and one .art each⚠️ Notes:Remember to check your registration email in time and follow the process to successfully get it for free!🚀 Go get the codes and register now, don't miss this free domain bonus!</div>
     </div>
 
     <div class="post">
@@ -392,30 +392,6 @@
     <div class="post">
         <div class="post-header">
             <span class="channel">@SparrK_VPN</span>
-            <span class="datetime">2026-05-14 17:33:14</span>
-        </div>
-        <div class="text">آموزش اتصال با اپ شیرخورشید  ☄️آموزش کوتاه: 1️⃣ ورود به اپ شیر و خورشید 2️⃣ از نوار بالا ورود به بخش Options 3️⃣ روی More Options کلیک کنید 4️⃣ گزینه‌ Connection Protocol رو قرار بدید روی CDN Fronting 5️⃣ در قسمت CDN edge IPs مقدار IPهایی که همین پایین قرار…</div>
-    </div>
-
-    <div class="post">
-        <div class="post-header">
-            <span class="channel">@SparrK_VPN</span>
-            <span class="datetime">2026-05-14 17:34:23</span>
-        </div>
-        <div class="text">آموزش اتصال با اپ شیرخورشید  ☄️آموزش کوتاه: 1️⃣ ورود به اپ شیر و خورشید 2️⃣ از نوار بالا ورود به بخش Options 3️⃣ روی More Options کلیک کنید 4️⃣ گزینه‌ Connection Protocol رو قرار بدید روی CDN Fronting 5️⃣ در قسمت CDN edge IPs مقدار IPهایی که همین پایین قرار…</div>
-    </div>
-
-    <div class="post">
-        <div class="post-header">
-            <span class="channel">@SparrK_VPN</span>
-            <span class="datetime">2026-05-14 17:35:55</span>
-        </div>
-        <div class="text">آموزش اتصال با اپ شیرخورشید  ☄️آموزش کوتاه: 1️⃣ ورود به اپ شیر و خورشید 2️⃣ از نوار بالا ورود به بخش Options 3️⃣ روی More Options کلیک کنید 4️⃣ گزینه‌ Connection Protocol رو قرار بدید روی CDN Fronting 5️⃣ در قسمت CDN edge IPs مقدار IPهایی که همین پایین قرار…</div>
-    </div>
-
-    <div class="post">
-        <div class="post-header">
-            <span class="channel">@SparrK_VPN</span>
             <span class="datetime">2026-05-14 18:32:21</span>
         </div>
         <div class="text">آموزش اتصال با اپ شیرخورشید  ☄️آموزش کوتاه: 1️⃣ ورود به اپ شیر و خورشید 2️⃣ از نوار بالا ورود به بخش Options 3️⃣ روی More Options کلیک کنید 4️⃣ گزینه‌ Connection Protocol رو قرار بدید روی CDN Fronting 5️⃣ در قسمت CDN edge IPs مقدار IPهایی که همین پایین قرار…</div>
@@ -427,6 +403,30 @@
             <span class="datetime">2026-05-14 20:01:52</span>
         </div>
         <div class="text">آخری که گذاشتین</div>
+    </div>
+
+    <div class="post">
+        <div class="post-header">
+            <span class="channel">@SparrK_VPN</span>
+            <span class="datetime">2026-05-14 20:01:52</span>
+        </div>
+        <div class="text">هنو وصله</div>
+    </div>
+
+    <div class="post">
+        <div class="post-header">
+            <span class="channel">@SparrK_VPN</span>
+            <span class="datetime">2026-05-14 20:05:37</span>
+        </div>
+        <div class="text">IP ✅CDN SNI Hostname: python.orgCDN EDGE IPS :151.101.64.223151.101.0.223151.101.128.223151.101.192.22392.122.123.1282.16.186.202.16.186.312.16.186.442.16.186.582.16.186.692.16.186.812.19.204.192.19.204.872.19.204.1372.19.204.1442.19.204.1452.19.204.1702.19.204.1842.19.204.1852.19.204.2022.19.204.2102.19.204.2112.19.204.2172.19.204.2182.19.204.2252.19.204.2322.19.204.2342.19.204.2402.19.204.2492.19.204.2502.19.204.2512.19.205.82.19.205.92.19.205.112.19.205.272.19.205.332.19.205.342.19.205.402.19.205.412.19.205.422.19.205.492.19.205.502.19.205.582.19.205.592.19.205.642.19.205.652.19.205.822.19.205.832.19.205.882.19.205.972.19.205.982.19.205.1052.22.151.42.22.151.92.22.151.122.22.151.132.22.151.152.22.151.172.22.151.202.22.151.222.22.151.232.22.151.322.22.151.362.22.151.372.22.151.392.22.151.472.22.151.512.22.151.532.22.151.542.22.151.582.22.151.602.22.151.622.22.151.1352.22.151.1382.22.151.1392.22.151.1412.22.151.1422.22.151.1432.22.151.1442.22.151.1462.22.151.1492.22.151.1502.22.151.1512.22.151.1522.22.151.1532.22.151.1542.22.151.1552.22.151.1562.22.151.1572.22.151.1582.22.151.1592.22.151.1612.22.151.1622.22.151.1632.22.151.1642.22.151.1682.22.151.1692.22.151.1702.22.151.1712.22.151.1732.22.151.1752.22.151.1792.22.151.1812.22.151.1822.22.151.1832.22.151.1842.22.151.1852.22.151.1862.22.151.1882.22.151.1892.22.151.1902.22.151.1912.22.151.1932.22.151.1942.22.151.19523.32.5.1823.32.5.4423.32.5.7123.32.5.9623.32.5.11823.32.5.14123.32.5.16723.32.5.19323.32.5.21423.32.5.23623.53.35.14623.53.35.15823.53.35.17123.53.35.18223.53.35.19423.53.35.20723.67.253.1123.67.253.2423.67.253.5523.67.253.7723.67.253.10123.67.253.12023.195.81.7223.195.81.8423.195.81.9623.195.81.10850.7.5.8363.141.252.20365.109.34.23492.122.123.12894.130.13.1994.130.33.4194.130.50.1294.130.70.16095.216.69.3796.16.97.8296.16.97.10496.16.97.12696.16.97.14896.16.97.16996.16.97.191104.124.148.191104.124.148.203138.201.54.122142.54.178.211144.76.1.88184.26.163.12184.26.163.24184.26.163.38184.26.163.51184.26.163.66184.26.163.79184.31.169.195184.31.169.252184.31.170.97184.31.170.185184.50.87.22184.50.87.44184.50.87.66184.50.87.88- برای استفاده از این لیست باید Hostname ذکر شده رو وارد کنید، برای مابقی ایپی لیست ها نیازی نداره حتما حذفش کنیدJOIN : @Sparrk_VPN ✅</div>
+    </div>
+
+    <div class="post">
+        <div class="post-header">
+            <span class="channel">@SparrK_VPN</span>
+            <span class="datetime">2026-05-15 05:50:09</span>
+        </div>
+        <div class="text">CDN IPS : 185.200.232.43185.200.232.40این دوتا با اپراتور همراه اول و ایرانسل بزنید تست کنیدوصل شدین ری اکشن بزنید❤️JOIN : @Sparrk_VPN ✅</div>
     </div>
 
     <div class="post">
@@ -509,7 +509,7 @@
     </div>
 
     <div id="toast" class="toast">✅ کپی شد!</div>
-    <footer>آخرین به‌روزرسانی: 2026-05-15 08:54:07 | تصاویر به صورت محلی در مخزن ذخیره شده‌اند.</footer>
+    <footer>آخرین به‌روزرسانی: 2026-05-15 11:23:45 | تصاویر به صورت محلی در مخزن ذخیره شده‌اند.</footer>
 </div>
 <script>
     function copyToClipboard(text) {
